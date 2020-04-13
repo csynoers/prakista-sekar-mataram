@@ -25,7 +25,12 @@ class MY_Controller extends CI_Controller {
     public function render_pages()
     {
 		$this->parser->parse( 'header', $this->header );
-		$this->parser->parse( 'navigation', [ 'base_url' => base_url() ] );
+		$this->parser->parse( 'navigation', $this->navigation() );
+
+		if ( ! empty($this->session->flashdata('msg')) )
+		{
+			$this->parser->parse('website/message', $this->session->flashdata('msg'));
+		}
 
 		if ( !empty( $this->input->get('act') ) )
 		{
@@ -69,6 +74,170 @@ class MY_Controller extends CI_Controller {
 		// echo "<pre>";
 		// print_r($this->contents);
 		// echo "</pre>";
-    }
+	}
+	
+	protected function navigation()
+	{
+		return array(
+			'navigation' => '
+				<li class="nav-item '.($this->uri->segment(1)=='admin' ? 'active' : NULL).'" data-toggle="tooltip" data-placement="right" title="Dashboard">
+					<a class="nav-link" href="'.base_url('admin').'">
+						<i class="fa fa-fw fa-dashboard"></i>
+						<span class="nav-link-text">Dashboard</span>
+					</a>
+				</li>
+				<li class="nav-item '.($this->uri->segment(1)=='post' ? 'active' : NULL).'" data-toggle="tooltip" data-placement="right" title="Post">
+					<a class="nav-link nav-link-collapse" data-toggle="collapse" href="#collapseExamplePost" data-parent="#exampleAccordion">
+						<i class="fa fa-fw fa-newspaper-o"></i>
+						<span class="nav-link-text">Post</span>
+					</a>
+					<ul class="sidenav-second-level text-capitalize collapse '.($this->uri->segment(1)=='post' ? 'show' : NULL).'" id="collapseExamplePost">
+						<li>
+							<a href="'.base_url('post').'" class="'.( ($this->uri->segment(1)=='post' && $this->uri->segment(2)=='' ) ? 'bg-secondary' : NULL).'">all post</a>
+						</li>
+						<li>
+							<a href="'.base_url('post/add').'" class="'.( ($this->uri->segment(1)=='post' && $this->uri->segment(2)=='add' ) ? 'bg-secondary' : NULL).'">add new</a>
+						</li>
+						<li>
+							<a href="'.base_url('post/categories').'" class="'.( ($this->uri->segment(1)=='post' && $this->uri->segment(2)=='categories' ) ? 'bg-secondary' : NULL).'">categories</a>
+						</li>
+						<!--<li>
+							<a href="{base_url}post/tags">tags</a>
+						</li>-->
+					</ul>
+				</li>
+				<li class="nav-item '.($this->uri->segment(1)=='pages' ? 'active' : NULL).'" data-toggle="tooltip" data-placement="right" title="Pages">
+					<a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseExamplePages" data-parent="#exampleAccordion" aria-expanded="true">
+						<i class="fa fa-fw fa-clone"></i>
+						<span class="nav-link-text">Pages</span>
+					</a>
+					<ul class="sidenav-second-level text-capitalize collapse '.($this->uri->segment(1)=='pages' ? 'show' : NULL).'" id="collapseExamplePages">
+						<li>
+							<a href="'.base_url('pages').'" class="'.( ($this->uri->segment(1)=='pages' && $this->uri->segment(2)=='' ) ? 'bg-secondary' : NULL).'">all pages</a>
+						</li>
+						<li>
+							<a href="'.base_url('pages/add').'" class="'.( ($this->uri->segment(1)=='pages' && $this->uri->segment(2)=='add' ) ? 'bg-secondary' : NULL).'">add new</a>
+						</li>
+					</ul>
+				</li>
+				<li class="nav-item text-capitalize '.($this->uri->segment(1)=='gallery' ? 'active' : NULL).'" data-toggle="tooltip" data-placement="right" title="Tools">
+					<a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseSupport" data-parent="#exampleAccordion" aria-expanded="true">
+					<i class="fa fa fa-codepen"></i>
+					<span class="nav-link-text">support</span>
+					</a>
+					<ul class="sidenav-second-level collapse '.( ($this->uri->segment(1)=='gallery') ? 'show' : NULL).'" id="collapseSupport">
+						<li>
+							<a href="'.base_url('gallery/photo').'" class="'.( ($this->uri->segment(1)=='gallery' && $this->uri->segment(2)=='photo' ) ? 'bg-secondary' : NULL).'">gallery foto</a>
+						</li>
+						<li>
+							<a href="'.base_url('gallery/video').'" class="'.( ($this->uri->segment(1)=='gallery' && $this->uri->segment(2)=='video' ) ? 'bg-secondary' : NULL).'">gallery video</a>
+						</li>
+						<!-- <li>
+							<a href="{base_url}banner/index">banner</a>
+						</li> -->
+						<li>
+						<li>
+							<a href="{base_url}form/contact-send">kotak masuk</a>
+						</li>
+						<li>
+							<a href="{base_url}support/contact-footer">Footer</a>
+						</li>
+						<!-- <li>
+							<a href="{base_url}support/video-footer">Video Footer</a>
+						</li> -->
+						<!-- <li>
+							<a href="{base_url}support/contents-no-image/?id=89">sidebar informasi</a>
+						</li> -->
+						<!-- <li>
+							<a href="{base_url}support/image-link/?id=90">sidebar partner</a>
+						</li> -->
+						<li>
+							<a href="{base_url}support/image-link/?id=91">sidebar social media</a>
+						</li>
+						<li>
+							<a href="{base_url}slide-show">slide show</a>
+						</li>
+						<li>
+							<a href="{base_url}support/contents-no-image/?id=47">Home Page</a>
+						</li>
+						<li>
+							<a href="{base_url}support/logo-edit">Logo</a>
+						</li>
+					</ul>
+				</li>
+				<!-- <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Appearance">
+					<a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseExampleAppearance" data-parent="#exampleAccordion">
+					<i class="fa fa-fw fa-paint-brush"></i>
+					<span class="nav-link-text">Appearance</span>
+					</a>
+					<ul class="sidenav-second-level collapse" id="collapseExampleAppearance">
+					<li>
+						<a href="{base_url}hukum">Themes</a>
+					</li>
+					<li>
+						<a href="{base_url}hukum">Customize</a>
+					</li>
+					<li>
+						<a href="{base_url}hukum">Widgets</a>
+					</li>
+					<li>
+						<a href="{base_url}hukum">Menus</a>
+					</li>
+					<li>
+						<a href="{base_url}hukum">Background</a>
+					</li>
+					</ul>
+				</li>
+				<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Plugins">
+					<a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseExamplePlugins" data-parent="#exampleAccordion">
+					<i class="fa fa-fw fa-plug"></i>
+					<span class="nav-link-text">Plugins</span>
+					</a>
+					<ul class="sidenav-second-level collapse" id="collapseExamplePlugins">
+					<li>
+						<a href="{base_url}hukum">Installed Plugins</a>
+					</li>
+					<li>
+						<a href="{base_url}hukum">Add New</a>
+					</li>
+					</ul>
+				</li> -->
+				<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tools">
+					<a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents" data-parent="#exampleAccordion">
+					<i class="fa fa-fw fa-wrench"></i>
+					<span class="nav-link-text">Tools</span>
+					</a>
+					<ul class="sidenav-second-level collapse" id="collapseComponents">
+					<li>
+						<a href="'.base_url('website/title').'">Seo Title</a>
+					</li>
+					<li>
+						<a href="'.base_url('website/keyword').'">Seo Keyword</a>
+					</li>
+					<li>
+						<a href="'.base_url('website/description').'">Seo Description</a>
+					</li>
+					</ul>
+				</li>
+				<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Users">
+					<a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponentsUsers" data-parent="#exampleAccordion">
+					<i class="fa fa-fw fa-user-circle-o"></i>
+					<span class="nav-link-text">Users</span>
+					</a>
+					<ul class="sidenav-second-level collapse" id="collapseComponentsUsers">
+					<li>
+						<a href="'.base_url('user').'">All Users</a>
+					</li>
+					<li>
+						<a href="'.base_url('user/add').'">Add New</a>
+					</li>
+					<li>
+						<a href="'.base_url('user/edit').'">Your Profile</a>
+					</li>
+					</ul>
+				</li>
+			',
+		);
+	}
 
 }

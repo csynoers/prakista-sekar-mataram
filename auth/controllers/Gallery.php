@@ -230,30 +230,9 @@ class Gallery extends MY_Controller{
 	}
 
 	public function video(){
-		$data['video']= $this->Gallery_model->select_video();
-		$this->load->view('header');
-		$this->parser->parse('navigation',[]);
-		if (!empty($this->input->get('action'))) {
-			switch ($this->input->get('action')) {
-				case 'insert':
-					$this->parser->parse('website/message',['message'=>$this->insert]);
-					break;
-				case 'update':
-					$this->parser->parse('website/message',['message'=>$this->update]);
-					break;
-				case 'delete':
-					$this->parser->parse('website/message',['message'=>$this->delete]);
-					break;
-				
-				default:
-					# code...
-					break;
-			}
-		}
-		$this->parser->parse('video/index',$data);
-		$this->load->view('footer');
-		// header('Content-Type: application/json');
-		// echo json_encode($data);
+		$this->pages= 'video/index';
+		$this->contents['video']= $this->Gallery_model->select_video();
+		$this->render_pages();
 	}
 	public function insert_video(){
 		$data['post']= [
@@ -267,14 +246,12 @@ class Gallery extends MY_Controller{
 		// echo json_encode($data);
 	}
 	public function edit_video(){
+		$this->pages= 'video/edit';
 		$data['where'] = ['options_id'=>$this->uri->segment(3)];
-		$data['video']= $this->Gallery_model->edit_video($data['where']);
-		$this->load->view('header');
-		$this->parser->parse('navigation',[]);
-		$this->parser->parse('video/edit',$data);
-		$this->load->view('footer');
-		// header('Content-Type: application/json');
-		// echo json_encode($data);
+		$data['video'] = $this->Gallery_model->edit_video($data['where']);
+		
+		$this->contents = $data;
+		$this->render_pages();
 	}
 	public function update_video(){
 		$data['where']=['options_id'=>$this->input->post('id')];

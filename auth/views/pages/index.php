@@ -48,7 +48,7 @@
                 <td>{pages_timestamp}</td>
                 <td>
                   <a href="<?php echo base_url() ?>pages/edit/{pages_id}"><button class="btn btn-info">Edit</button></a>
-                  <!--<a href="<?php echo base_url() ?>pages/delete/{pages_id}" onclick="return confirm('Are you sure you want to delete this item?');"><button class="btn btn-danger">Delete</button></a>-->
+                  <a href="<?php echo base_url() ?>pages/delete/{pages_id}" onclick="return confirm('Are you sure you want to delete this item?');"><button class="btn btn-danger">Delete</button></a>
                 </td>
               </tr>
             {/pages}

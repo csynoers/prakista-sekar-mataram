@@ -10,55 +10,52 @@ class Website extends MY_Controller{
 		}
 	}
  
-	function title()
+	public function title()
 	{
 		$this->pages = 'website/title';
 		$this->contents = ['title' => $this->Website_model->select_title()];
 		$this->render_pages();
 	}
 
-	function keyword()
+	public function keyword()
 	{
 		$this->pages = 'website/keyword';
 		$this->contents = ['keyword' => $this->Website_model->select_keyword()];
 		$this->render_pages();
 	}
 
-	function description()
+	public function description()
 	{
 		$this->pages = 'website/description';
 		$this->contents = ['description' => $this->Website_model->select_description()];
 		$this->render_pages();
 	}
 
-	function update()
+	public function update()
 	{
-		$this->Website_model->where = ['options_id'=>$this->uri->segment(3)];
+		# get key of page
+		$options_id = $this->uri->segment(3);
+
+		# send data to model
+		$this->Website_model->where = ['options_id'=> $options_id];
 		$this->Website_model->post = ['options_contents' => $this->input->post('options_contents')];
 
-		if ( $this->Website_model->update_website() )
-		{
-			switch ($this->uri->segment(3))
-			{
-				case 1:
-					#redirect title
-					redirect(base_url("website/title/?act=update"));
-					break;
-				case 2:
-					# redirect keyword
-					redirect(base_url("website/keyword/?act=update"));
-					break;
-				case 3:
-					# redirect description
-					redirect(base_url("website/description/?act=update"));
-					break;
-				
-				default:
-					# code...
-					break;
-			}
-			
-		}
+		# update process
+		$this->Website_model->update_website();
 
+		$page = [
+			'1' => 'title',
+			'2' => 'keyword',
+			'3' => 'description',
+		];
+
+		# flashdata
+		$message = array(
+			'alert' => 'alert-success',
+			'msg' => 'Data berhasil diubah'
+		);
+
+		$this->session->set_flashdata('msg', $message);
+		redirect(base_url("website/{$page[$options_id]}"));
 	}
 }
