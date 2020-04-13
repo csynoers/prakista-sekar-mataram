@@ -13,21 +13,21 @@ class Website extends MY_Controller{
 	public function title()
 	{
 		$this->pages = 'website/title';
-		$this->contents = ['title' => $this->Website_model->select_title()];
+		$this->contents = ['title' => $this->Website_model->get(1)];
 		$this->render_pages();
 	}
 
 	public function keyword()
 	{
 		$this->pages = 'website/keyword';
-		$this->contents = ['keyword' => $this->Website_model->select_keyword()];
+		$this->contents = ['keyword' => $this->Website_model->get(2)];
 		$this->render_pages();
 	}
 
 	public function description()
 	{
 		$this->pages = 'website/description';
-		$this->contents = ['description' => $this->Website_model->select_description()];
+		$this->contents = ['description' => $this->Website_model->get(3)];
 		$this->render_pages();
 	}
 
@@ -37,11 +37,10 @@ class Website extends MY_Controller{
 		$options_id = $this->uri->segment(3);
 
 		# send data to model
-		$this->Website_model->where = ['options_id'=> $options_id];
-		$this->Website_model->post = ['options_contents' => $this->input->post('options_contents')];
+		$this->Website_model->post = $this->input->post();
 
 		# update process
-		$this->Website_model->update_website();
+		$this->Website_model->update( $options_id );
 
 		$page = [
 			'1' => 'title',
