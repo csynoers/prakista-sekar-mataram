@@ -202,21 +202,21 @@ class MY_Controller extends CI_Controller {
 					</li>
 					</ul>
 				</li> -->
-				<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tools">
+				<li class="nav-item '.($this->uri->segment(1)=='website' ? 'active' : NULL).'" data-toggle="tooltip" data-placement="right" title="Tools">
 					<a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents" data-parent="#exampleAccordion">
 					<i class="fa fa-fw fa-wrench"></i>
 					<span class="nav-link-text">Tools</span>
 					</a>
-					<ul class="sidenav-second-level collapse" id="collapseComponents">
-					<li>
-						<a href="'.base_url('website/title').'">Seo Title</a>
-					</li>
-					<li>
-						<a href="'.base_url('website/keyword').'">Seo Keyword</a>
-					</li>
-					<li>
-						<a href="'.base_url('website/description').'">Seo Description</a>
-					</li>
+					<ul class="sidenav-second-level collapse '.($this->uri->segment(1)=='website' ? 'show' : NULL).'" id="collapseComponents">
+						<li>
+							<a href="'.base_url('website/title').'" class="'.( ($this->uri->segment(1)=='website' && $this->uri->segment(2)=='title') ? 'bg-secondary' : NULL).'">Seo Title</a>
+						</li>
+						<li>
+							<a href="'.base_url('website/keyword').'" class="'.( ($this->uri->segment(1)=='website' && $this->uri->segment(2)=='keyword') ? 'bg-secondary' : NULL).'">Seo Keyword</a>
+						</li>
+						<li>
+							<a href="'.base_url('website/description').'" class="'.( ($this->uri->segment(1)=='website' && $this->uri->segment(2)=='description') ? 'bg-secondary' : NULL).'">Seo Description</a>
+						</li>
 					</ul>
 				</li>
 				<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Users">
