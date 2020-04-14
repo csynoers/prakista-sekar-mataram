@@ -54,7 +54,7 @@
             <div class="col-md-12">
               <label>Thumbnail</label>
               <div class="col-md-4">
-                <img class="img-responsive" src="<?php echo base_url() ?>../assets/images/post/thumb/256/{post_src}" title="{post_title}">
+                <img class="img-responsive" src="<?php echo base_url() ?>../assets/images/post/256/{post_src}" title="{post_title}">
               </div>
             </div>
           </div>

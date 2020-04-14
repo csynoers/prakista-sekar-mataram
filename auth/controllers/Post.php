@@ -101,80 +101,79 @@ class Post extends MY_Controller{
 	public function update(){
 		if (empty($_FILES['fupload']['name'])){#update without image
 			$this->load->helper('string');
-			$this->Post_model->post= [
+			# get post form action
+			$post = [
 				'post_title'=>$this->input->post('title'),
 				'post_categories'=>$this->input->post('categories'),
 				'post_contents'=>$this->input->post('contents'),
 				'post_seo'=>seo_title($this->input->post('title')),
 			];
+
+			# send data to model
+			$this->Post_model->post = $data;
+
 			$this->Post_model->where= ['post_id'=>$this->input->post('id')];
 
 			if ( $this->Post_model->update_post() )
 			{
-				redirect(base_url('post/index/?act=update'));
+				# flashdata
+				$message = array(
+					'alert' => 'alert-success',
+					'msg' => 'Data berhasil diubah'
+				);
+
+				$this->session->set_flashdata('msg', $message);
+				redirect(base_url('post'));
 			}
 
 		}else{#update with image
-			$config['upload_path']          = '../assets/images/post';
+			# code...with upload file
+			$config['upload_path']          = '../assets/images/post/';
 			$config['allowed_types']        = 'gif|jpg|png';
-			// $config['max_size']             = 100;
-			// $config['max_width']            = 1024;
-			// $config['max_height']           = 768;
-	 
+			$sizes = [256,128];
+			
+			# load library upload
 			$this->load->library('upload', $config);
 	 
 			if ( ! $this->upload->do_upload('fupload')){
 				$this->pages= 'post/edit';
 				$this->Post_model->where= ['post_id' => $this->input->post('id')];
 				$this->contents['post']= $this->Post_model->edit_post();
-				$this->messages['message']= $this->upload->display_errors();
-				$this->render_page_messages();
+				# flashdata
+				$message = array(
+					'alert' => 'alert-warning',
+					'msg' => $this->upload->display_errors()
+				);
+
+				$this->session->set_flashdata('msg', $message);
+				$this->render_pages();
 			}else{
 				$this->Post_model->where= ['post_id' => $this->input->post('id')];
 				$this->rows= $this->Post_model->post_data();
 				$image 	= $this->rows[0]->post_src;
-				$file 	= "../assets/images/post/$image";
+				$file 	= "{$config['upload_path']}{$image}";
 
 				if ( file_exists($file) ) {
 					unlink($file);
-					if ( file_exists("../assets/images/post/thumb/256/$image") ) {
-						unlink("../assets/images/post/thumb/256/$image");
-						if ( file_exists("../assets/images/post/thumb/128/$image") ) {
-							unlink("../assets/images/post/thumb/128/$image");
+					foreach ($sizes as $size) {
+						if ( file_exists("{$config['upload_path']}{$size}/{$image}") ) {
+							unlink("{$config['upload_path']}{$size}/{$image}");
 						}
 					}
 				}
 
 				$image = $this->upload->data();
-	            // image resize
-	            $this->load->library('image_lib');
-			    $config['image_library'] = 'gd2';
-			    $config['source_image'] = $image['full_path'];
-			    $config['new_image'] = '../assets/images/post/thumb/256/'.$image['file_name'];
-			    $config['create_thumb'] = FALSE;
-			    $config['maintain_ratio'] = TRUE;
-			    $config['width']     = 256;
-			    // $config['height']   = 256;
+                /* start image resize */
+                $this->load->helper('img');
+                $this->load->library('image_lib');
+                foreach ($sizes as $size) {
+                    $this->image_lib->clear();
+                    $this->image_lib->initialize( resize($size, $config['upload_path'], $image['file_name']) );
+                    $this->image_lib->resize();
+                }
+				/* end image resize */
 
-			    $this->image_lib->clear();
-			    $this->image_lib->initialize($config);
-			    $this->image_lib->resize();
-	            // end image resize
-
-	            // image resize
-	            $this->load->library('image_lib');
-			    $config['image_library'] = 'gd2';
-			    $config['source_image'] = $image['full_path'];
-			    $config['new_image'] = '../assets/images/post/thumb/128/'.$image['file_name'];
-			    $config['create_thumb'] = FALSE;
-			    $config['maintain_ratio'] = TRUE;
-			    $config['width']     = 128;
-			    // $config['height']   = 128;
-
-			    $this->image_lib->clear();
-			    $this->image_lib->initialize($config);
-			    $this->image_lib->resize();
-	            // end image resize
+				# load string helper
 				$this->load->helper('string');
 				$this->Post_model->post	= array(
 					'post_title'     	=> $this->input->post('title'),
@@ -184,12 +183,17 @@ class Post extends MY_Controller{
 					'post_src' 			=> $image['file_name'],
 				);
 				if ( $this->Post_model->update_post() ) {
-					redirect(base_url("post/index/?act=update"));
+					# flashdata
+					$message = array(
+						'alert' => 'alert-success',
+						'msg' => 'Data berhasil diubah'
+					);
+
+					$this->session->set_flashdata('msg', $message);
+					redirect(base_url("post"));
 				};
 
 			}
-			// echo "<pre>";
-			// print_r($data);
 
 		}
 
