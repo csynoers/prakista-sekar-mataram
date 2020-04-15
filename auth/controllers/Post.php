@@ -37,7 +37,13 @@ class Post extends MY_Controller{
 		if ( ! $this->upload->do_upload('fupload')){
 			$this->pages= 'post/add';
 			$this->contents['categories']= $this->Post_model->post_add();
-			$this->messages['message']= $this->upload->display_errors();
+			# flashdata
+			$message = array(
+				'alert' => 'alert-warning',
+				'msg' => $this->upload->display_errors()
+			);
+
+			$this->session->set_flashdata('msg', $message);
 			$this->render_pages();
 
 		}else{
