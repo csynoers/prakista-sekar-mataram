@@ -27,51 +27,28 @@ class Post extends MY_Controller{
 
 	public function insert()
 	{
-		$config['upload_path']          = '../assets/images/post';
+		$config['upload_path']          = '../assets/images/post/';
 		$config['allowed_types']        = 'gif|jpg|png';
-		// $config['max_size']             = 100;
-		// $config['max_width']            = 1024;
-		// $config['max_height']           = 768;
- 
+		$sizes = [256,128];
+			
+		# load library upload
 		$this->load->library('upload', $config);
  
 		if ( ! $this->upload->do_upload('fupload')){
 			$this->pages= 'post/add';
 			$this->contents['categories']= $this->Post_model->post_add();
 			$this->messages['message']= $this->upload->display_errors();
-			$this->render_page_messages();
+			$this->render_pages();
 
 		}else{
 			$image = $this->upload->data();
-            // image resize
-            $this->load->library('image_lib');
-		    $config['image_library'] = 'gd2';
-		    $config['source_image'] = $image['full_path'];
-		    $config['new_image'] = '../assets/images/post/thumb/256/'.$image['file_name'];
-		    $config['create_thumb'] = FALSE;
-		    $config['maintain_ratio'] = TRUE;
-		    $config['width']     = 256;
-		    // $config['height']   = 256;
-
-		    $this->image_lib->clear();
-		    $this->image_lib->initialize($config);
-		    $this->image_lib->resize();
-            // end image resize
-
-            // image resize
-            $this->load->library('image_lib');
-		    $config['image_library'] = 'gd2';
-		    $config['source_image'] = $image['full_path'];
-		    $config['new_image'] = '../assets/images/post/thumb/128/'.$image['file_name'];
-		    $config['create_thumb'] = FALSE;
-		    $config['maintain_ratio'] = TRUE;
-		    $config['width']     = 128;
-		    // $config['height']   = 128;
-
-		    $this->image_lib->clear();
-		    $this->image_lib->initialize($config);
-		    $this->image_lib->resize();
-            // end image resize
+			$this->load->helper('img');
+			$this->load->library('image_lib');
+            foreach ($sizes as $size) {
+				$this->image_lib->clear();
+				$this->image_lib->initialize( resize($size, $config['upload_path'], $image['file_name']) );
+				$this->image_lib->resize();
+			}
 
 			$this->load->helper('string');
 			$this->Post_model->post	= array(
@@ -82,10 +59,15 @@ class Post extends MY_Controller{
 				'post_src' 				=> $image['file_name'],
 			);
 			if ( $this->Post_model->insert_post() ) {
-				redirect(base_url("post/index/?act=insert"));
+				# flashdata
+				$message = array(
+					'alert' => 'alert-success',
+					'msg' => 'Data berhasil ditambahkan'
+				);
+
+				$this->session->set_flashdata('msg', $message);
+				redirect(base_url("post/index"));
 			}
-			// echo "<pre>";
-			// print_r($data);
 
 		}
 	}
