@@ -51,49 +51,33 @@ class Gallery extends MY_Controller{
 		// $data['last_id'] = 19;
 
 		#whith files upload
-		$config['upload_path']          = '../assets/images/photo';
+		$config['upload_path']          = '../assets/images/photo/';
 		$config['allowed_types']        = 'jpg';
-		// $config['max_size']             = 100;
-		// $config['max_width']            = 1024;
-		// $config['max_height']           = 768;
+		$size = [256,128];
  
 		$this->load->library('upload', $config);
  
 		if ( ! $this->upload->do_upload('fupload')){
 			$this->pages= 'photo/add';
-			$this->messages['message']= $this->upload->display_errors(); 
-			$this->render_page_messages();
+			# flashdata
+			$message = array(
+				'alert' => 'alert-warning',
+				'msg' => $this->upload->display_errors()
+			);
+
+			$this->session->set_flashdata('msg', $message);
+			$this->render_pages();
 
 		}else{
-			$image = $this->upload->data();
-            // image resize
-            $this->load->library('image_lib');
-		    $config['image_library'] = 'gd2';
-		    $config['source_image'] = $image['full_path'];
-		    $config['new_image'] = '../assets/images/photo/thumb/256/'.$image['file_name'];
-		    $config['create_thumb'] = FALSE;
-		    $config['maintain_ratio'] = TRUE;
-		    $config['width']     = 256;
-		    $config['height']   = 256;
-
-		    $this->image_lib->clear();
-		    $this->image_lib->initialize($config);
-		    $this->image_lib->resize();
-            // end image resize
-
-            // image resize
-            $this->load->library('image_lib');
-		    $config['image_library'] = 'gd2';
-		    $config['source_image'] = $image['full_path'];
-		    $config['new_image'] = '../assets/images/photo/thumb/128/'.$image['file_name'];
-		    $config['create_thumb'] = FALSE;
-		    $config['maintain_ratio'] = TRUE;
-		    $config['width']     = 128;
-		    $config['height']   = 128;
-
-		    $this->image_lib->clear();
-		    $this->image_lib->initialize($config);
-		    $this->image_lib->resize();
+			// image resize
+            $image = $this->upload->data();
+			$this->load->helper('img');
+			$this->load->library('image_lib');
+            foreach ($sizes as $size) {
+				$this->image_lib->clear();
+				$this->image_lib->initialize( resize($size, $config['upload_path'], $image['file_name']) );
+				$this->image_lib->resize();
+			}
             // end image resize
 
 			// $this->load->helper('string');
@@ -105,13 +89,16 @@ class Gallery extends MY_Controller{
 			$this->Gallery_model->where= ['options_parent'=>$this->last_id];
 			if ( $this->Gallery_model->insert_photo() )
 			{
-				redirect(base_url('gallery/edit-photo/'.$this->last_id.'/?act=insert'));
+				# flashdata
+				$message = array(
+					'alert' => 'alert-success',
+					'msg' => 'Data berhasil ditambahkan'
+				);
+
+				$this->session->set_flashdata('msg', $message);
+				redirect(base_url('gallery/edit-photo/'.$this->last_id));
 			}			
 		}
-
-
-		// header('Content-Type: application/json');
-		// echo json_encode($data);
 	}
 	public	function edit_photo(){
 		$this->pages= 'photo/edit'; 
