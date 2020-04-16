@@ -141,17 +141,14 @@
             var data_id= j(this).val();
             check.push(data_id);
           });
-          // alert(check.length+' Foto Berhasil Dihapus.');
-          // console.log(check);
 
           j.ajax({
              type: "POST",
              url: "{base_url}gallery/delete-photo",
-             data: {id:check},
+             data: {"id":check},
              success: function(data){
                 location.reload();
                 alert(check.length+' Foto Berhasil Dihapus.');
-              console.log(data);
              }
           });
 

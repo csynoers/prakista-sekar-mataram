@@ -271,27 +271,23 @@ class Gallery extends MY_Controller{
 
 	public function delete_photo(){
         $data['path']= '../assets/images/photo/';
-        $data['data_id'] = $this->input->post('id');
+		$data['data_id'] = $this->input->post('id');
         foreach ($data['data_id'] as $value) {
-            $data['data_foto'] = $this->Gallery_model->edit_photo(array('options_id' => $value));
+			$data['data_foto'] = $this->Gallery_model->get( $value );
+
             foreach ($data['data_foto'] as $key => $value_data_foto) {
 
                 if (file_exists($data['path'].$value_data_foto->options_contents)) {
                     unlink($data['path'].$value_data_foto->options_contents);
-                    	if (file_exists($data['path']."thumb/256/".$value_data_foto->options_contents)) {
-							unlink($data['path']."thumb/256/".$value_data_foto->options_contents);
-								if (file_exists($data['path']."thumb/128/".$value_data_foto->options_contents)) {
-									unlink($data['path']."thumb/128/".$value_data_foto->options_contents);
-								}
+					if (file_exists($data['path']."256/".$value_data_foto->options_contents)) {
+						unlink($data['path']."256/".$value_data_foto->options_contents);
+						if (file_exists($data['path']."128/".$value_data_foto->options_contents)) {
+							unlink($data['path']."128/".$value_data_foto->options_contents);
 						}
+					}
 
-                    $query= $this->Gallery_model->delete_photo(array('options_id'=>$value));
-                } else {
-                    echo "The $value_data_foto->options_contents file  does not exist";
-
-                }
-
-				print_r($value_data_foto);
+				}
+				$this->Gallery_model->delete( $value );
             }
         }
     }

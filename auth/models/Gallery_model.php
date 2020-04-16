@@ -1,7 +1,21 @@
 <?php
 
 class Gallery_model extends CI_Model{
-	
+	protected $table = 'options';
+	protected $primaryKey = 'options_id';
+	public function get($id=NULL)
+	{
+		if ( $id ) {
+			$this->db->where($this->primaryKey,$id);
+		}
+		return $this->db->get( $this->table )->result_object();
+	}
+	public function delete($id)
+	{
+		$this->db->where($this->primaryKey,$id);
+		return $this->db->delete( $this->table );
+	}
+
 	public function select_photo()
 	{
 		$this->db->select('*');
