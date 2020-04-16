@@ -88,7 +88,14 @@ class Pages extends MY_Controller{
 	function delete(){
 		$this->Pages_model->where = ['pages_id' => $this->uri->segment('3')];
 		if ( $this->Pages_model->delete_pages() ) {
-			redirect(base_url("pages/index/delete/?act=delete"));
+			# flashdata
+			$message = array(
+				'alert' => 'alert-success',
+				'msg' => 'Data berhasil dihapus'
+			);
+
+			$this->session->set_flashdata('msg', $message);
+			redirect(base_url("pages"));
 		}
 	}
 
