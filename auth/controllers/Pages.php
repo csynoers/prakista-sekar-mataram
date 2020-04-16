@@ -36,7 +36,14 @@ class Pages extends MY_Controller{
 
 		if ( $this->Pages_model->insert_pages() )
 		{
-			redirect(base_url("pages/index/insert/?act=insert"));
+			# flashdata
+			$message = array(
+				'alert' => 'alert-success',
+				'msg' => 'Data berhasil disimpan'
+			);
+
+			$this->session->set_flashdata('msg', $message);
+			redirect(base_url("pages"));
 		}
 	}
 
