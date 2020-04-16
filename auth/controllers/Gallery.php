@@ -108,8 +108,8 @@ class Gallery extends MY_Controller{
 		$this->contents['photo_rows']= $this->Gallery_model->edit_photo();
 		$this->render_pages();
 	}
-	public function update_photo(){
-		if (empty($_FILES['fupload']['tmp_name'])) {
+	public function update_photo(){	
+		if ( empty($_FILES['fupload']['tmp_name'][0]) ) {
 			// without files upload
 			$this->load->helper('string');
 			$this->Gallery_model->where= ['options_id'=>$this->input->post('id')];
@@ -118,74 +118,84 @@ class Gallery extends MY_Controller{
 				'options_seo'=>seo_title($this->input->post('title')),
 			];
 			if ( $this->Gallery_model->update_photo() ) {
-				redirect(base_url('gallery/edit-photo/'.$this->input->post('id').'/?action=update'));
+				# flashdata
+				$message = array(
+					'alert' => 'alert-success',
+					'msg' => 'Data berhasil diubah'
+				);
+
+				$this->session->set_flashdata('msg', $message);
+				redirect(base_url('gallery/edit-photo/'.$this->input->post('id')));
 			}
 
-		}else{
+		} else {
 			#whith files upload
 			$this->Gallery_model->where= ['options_parent'=>$this->input->post('id')];
-			$config['upload_path']          = '../assets/images/photo';
-			$config['allowed_types']        = 'jpg';
-			// $config['max_size']             = 100;
-			// $config['max_width']            = 1024;
-			// $config['max_height']           = 768;
-	 
+			$config['upload_path']          = '../assets/images/photo/';
+			$config['allowed_types']        = 'jpg|png';
+			$sizes = [256,128];
+
+			# load library upload
 			$this->load->library('upload', $config);
-	 
-			if ( ! $this->upload->do_upload('fupload')){
-				$this->pages= 'photo/edit'; 
-				$this->message['message']= $this->upload->display_errors();
-				$this->Gallery_model->where= ['options_id'=>$this->input->post('id')];
-				$this->contents['edit_photo_album']= $this->Gallery_model->edit_photo();
-				$this->Gallery_model->where= ['options_parent'=>$this->input->post('id')];
-				$this->contents['photo_rows']= $this->Gallery_model->edit_photo();
-				$this->render_page_messages();
 
-			}else{
-				$image = $this->upload->data();
-	            // image resize
-	            $this->load->library('image_lib');
-			    $config['image_library'] = 'gd2';
-			    $config['source_image'] = $image['full_path'];
-			    $config['new_image'] = '../assets/images/photo/thumb/256/'.$image['file_name'];
-			    $config['create_thumb'] = FALSE;
-			    $config['maintain_ratio'] = TRUE;
-			    $config['width']     = 256;
-			    $config['height']   = 256;
+			# initialize variable images for generate data upload multiple
+			$images = array();
+			foreach ($_FILES['fupload']['name'] as $key => $image) {
+				$_FILES['fupload[]']['name']= $_FILES['fupload']['name'][$key];
+				$_FILES['fupload[]']['type']= $_FILES['fupload']['type'][$key];
+				$_FILES['fupload[]']['tmp_name']= $_FILES['fupload']['tmp_name'][$key];
+				$_FILES['fupload[]']['error']= $_FILES['fupload']['error'][$key];
+				$_FILES['fupload[]']['size']= $_FILES['fupload']['size'][$key];
 
-			    $this->image_lib->clear();
-			    $this->image_lib->initialize($config);
-			    $this->image_lib->resize();
-	            // end image resize
+				$this->upload->initialize($config);
+				# do upload file
+				
+				if ( ! $this->upload->do_upload('fupload[]')){
+					// $images[] = array(
+					// 	'stats' => FALSE,
+					// 	'data' => $this->upload->display_errors()
+					// );
+					# flashdata
+					$images[] = '<p>' . $_FILES['fupload']['name'][$key] . ' Error: ' . strip_tags($this->upload->display_errors()) . '</p>';
+				} else {
+					$image = $this->upload->data();
+					// $images[] = array(
+					// 	'stats' => TRUE,
+					// 	'data' => $image
+					// );
+					
+					# flashdata
+					$images[] = '<p>' . $_FILES['fupload']['name'][$key] . ' Sukses</p>';
 
-	            // image resize
-	            $this->load->library('image_lib');
-			    $config['image_library'] = 'gd2';
-			    $config['source_image'] = $image['full_path'];
-			    $config['new_image'] = '../assets/images/photo/thumb/128/'.$image['file_name'];
-			    $config['create_thumb'] = FALSE;
-			    $config['maintain_ratio'] = TRUE;
-			    $config['width']     = 128;
-			    $config['height']   = 128;
+					/* start image resize */
+					$this->load->helper('img');
+					$this->load->library('image_lib');
+					foreach ($sizes as $size) {
+						$this->image_lib->clear();
+						$this->image_lib->initialize( resize($size, $config['upload_path'], $image['file_name']) );
+						$this->image_lib->resize();
+					}
+					/* end image resize */
 
-			    $this->image_lib->clear();
-			    $this->image_lib->initialize($config);
-			    $this->image_lib->resize();
-	            // end image resize
-
-				$this->load->helper('string');
-				$this->Gallery_model->post= [
-					'options_contents' 	=> $image['file_name'],
-					'options_parent' 	=> $this->input->post('id'),
-				];
-				if ( $this->Gallery_model->insert_photo() ) {
-					redirect(base_url('gallery/edit_photo/'.$this->input->post('id').'/?act=update'));
+					$this->load->helper('string');
+					$this->Gallery_model->post= [
+						'options_contents' 	=> $image['file_name'],
+						'options_parent' 	=> $this->input->post('id'),
+					];
+					$this->Gallery_model->insert_photo();
 				}
+				
 			}
+			# flashdata
+			$message = array(
+				'alert' => 'alert-success',
+				'msg' => implode('',$images),
+			);
 
+			$this->session->set_flashdata('msg', $message);
+			redirect(base_url('gallery/edit_photo/'.$this->input->post('id')));
 		}
-		// header('Content-Type: application/json');
-		// echo json_encode($data);
+
 	}
 	public function delete_photo_album(){
 		$this->id = $this->uri->segment(3);

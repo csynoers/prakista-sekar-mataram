@@ -36,7 +36,7 @@
                             </button>    
                             <strong>Info !</strong> Type: *.jpg. Max-Size: 1024x768 Pixels
                           </div>
-                          <input type="file" class="form-control" name="fupload" />
+                          <input type="file" class="form-control" name="fupload[]" multiple/>
                       </div>
                   </div>
               </div>
@@ -76,7 +76,7 @@
     <div class="row" id="content">
         {photo_rows}
         <div class="col-md-3">
-          <img class="img-responsive img-thumbnail gallery-foto" src="<?php echo base_url(); ?>../assets/images/photo/256/{options_contents}" alt="" >
+          <img class="img-responsive img-thumbnail gallery-foto" src="          <?php echo base_url(); ?>../assets/images/photo/256/{options_contents}" alt="" >
           <p><input type="checkbox" class="checkthumb" name="checkthumb" value="{options_id}" > {options_contents} </p>
         </div>
         {/photo_rows}
