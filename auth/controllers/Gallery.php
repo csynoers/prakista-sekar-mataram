@@ -199,31 +199,32 @@ class Gallery extends MY_Controller{
 	}
 	public function delete_photo_album(){
 		$this->id = $this->uri->segment(3);
-		$this->Gallery_model->where= ['options_id'=>$this->id];
-		$this->Gallery_model->delete_photo();
+		$id_album = $this->id;
 
         $data['path']= '../assets/images/photo/';
-		$this->Gallery_model->where= ['options_parent'=>$this->id];
 
-        foreach ($this->Gallery_model->edit_photo() as $key => $value_data_foto) {
+        foreach ($this->Gallery_model->get_by_parent($id_album) as $key => $value) {
 
-            if (file_exists($data['path'].$value_data_foto->options_contents)) {
-                unlink($data['path'].$value_data_foto->options_contents);
-                	if (file_exists($data['path']."thumb/256/".$value_data_foto->options_contents)) {
-						unlink($data['path']."thumb/256/".$value_data_foto->options_contents);
-							if (file_exists($data['path']."thumb/128/".$value_data_foto->options_contents)) {
-								unlink($data['path']."thumb/128/".$value_data_foto->options_contents);
-							}
+            if (file_exists($data['path'].$value->options_contents)) {
+                unlink($data['path'].$value->options_contents);
+				if (file_exists($data['path']."thumb/256/".$value->options_contents)) {
+					unlink($data['path']."thumb/256/".$value->options_contents);
+					if (file_exists($data['path']."thumb/128/".$value->options_contents)) {
+						unlink($data['path']."thumb/128/".$value->options_contents);
 					}
-				$this->Gallery_model->where= ['options_id'=>$value_data_foto->options_id];
-                $this->Gallery_model->delete_photo();
+				}
             }
+			$this->Gallery_model->delete($value->options_id);
+		}
+		$this->Gallery_model->delete($id_album);
+		# flashdata
+		$message = array(
+			'alert' => 'alert-success',
+			'msg' => 'Album berhasil dihapus',
+		);
 
-			// print_r($value_data_foto);
-        }
-        redirect(base_url('gallery/photo/?act=delete'));
-		// header('Content-Type:application/json');
-		// echo json_encode($data);
+		$this->session->set_flashdata('msg', $message);
+        redirect(base_url('gallery/photo'));
 	}
 
 	public function video(){

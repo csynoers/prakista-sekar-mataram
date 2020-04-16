@@ -3,11 +3,17 @@
 class Gallery_model extends CI_Model{
 	protected $table = 'options';
 	protected $primaryKey = 'options_id';
+	protected $options_parent = 'options_parent' ;
 	public function get($id=NULL)
 	{
 		if ( $id ) {
 			$this->db->where($this->primaryKey,$id);
 		}
+		return $this->db->get( $this->table )->result_object();
+	}
+	public function get_by_parent($options_parent)
+	{
+		$this->db->where($this->options_parent,$options_parent);
 		return $this->db->get( $this->table )->result_object();
 	}
 	public function delete($id)
