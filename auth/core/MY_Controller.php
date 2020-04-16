@@ -127,7 +127,7 @@ class MY_Controller extends CI_Controller {
 					</a>
 					<ul class="sidenav-second-level collapse '.( ($this->uri->segment(1)=='gallery') ? 'show' : NULL).'" id="collapseSupport">
 						<li>
-							<a href="'.base_url('gallery/photo').'" class="'.( ($this->uri->segment(1)=='gallery' && $this->uri->segment(2)=='photo' ) ? 'bg-secondary' : NULL).'">gallery foto</a>
+							<a href="'.base_url('gallery/photo').'" class="'.( ($this->uri->segment(1)=='gallery' && $this->uri->segment(2)=='photo' ) || ($this->uri->segment(1)=='gallery' && $this->uri->segment(2)=='add-photo' ) || ($this->uri->segment(1)=='gallery' && $this->uri->segment(2)=='edit-photo' ) ? 'bg-secondary' : NULL).'">gallery foto</a>
 						</li>
 						<li>
 							<a href="'.base_url('gallery/video').'" class="'.( ($this->uri->segment(1)=='gallery' && $this->uri->segment(2)=='video' ) ? 'bg-secondary' : NULL).'">gallery video</a>
