@@ -73,7 +73,14 @@ class Pages extends MY_Controller{
 
 		if ( $this->Pages_model->update_pages() )
 		{
-			redirect(base_url("pages/index/?act=update"));
+			# flashdata
+			$message = array(
+				'alert' => 'alert-success',
+				'msg' => 'Data berhasil diupdate'
+			);
+
+			$this->session->set_flashdata('msg', $message);
+			redirect(base_url("pages"));
 		}
 
 	}

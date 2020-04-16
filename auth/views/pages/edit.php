@@ -21,8 +21,7 @@
           <div class="form-row">
             <div class="col-md-6">
               <label for="exampleInputName">Judul</label>
-              <input type="hidden" name="id" value="{pages_id}">
-              <input class="form-control text-capitalize" id="exampleInputName" type="text" aria-describedby="nameHelp" placeholder="Enter Your Title In Here" name="title" required="" value="{pages_title}" readonly>
+              <input class="form-control text-capitalize" id="exampleInputName" type="text" aria-describedby="nameHelp" placeholder="Enter Your Title In Here" name="title" required="" value="{pages_title}" required="">
             </div>
           </div>
         </div>
@@ -51,6 +50,7 @@
         <div class="form-group">
           <div class="row">
             <div class="col-md-12">
+              <input type="hidden" name="id" value="{pages_id}">
               <button type="submit" class="btn btn-primary">Update</button>
               &nbsp &nbsp
               <button type="button" class="btn btn-danger" onclick="return window.history.back()">Cancel</button>
