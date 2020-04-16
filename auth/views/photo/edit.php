@@ -76,7 +76,7 @@
     <div class="row" id="content">
         {photo_rows}
         <div class="col-md-3">
-          <img class="img-responsive img-thumbnail gallery-foto" src="<?php echo base_url(); ?>../assets/images/photo/thumb/256/{options_contents}" alt="" >
+          <img class="img-responsive img-thumbnail gallery-foto" src="<?php echo base_url(); ?>../assets/images/photo/256/{options_contents}" alt="" >
           <p><input type="checkbox" class="checkthumb" name="checkthumb" value="{options_id}" > {options_contents} </p>
         </div>
         {/photo_rows}

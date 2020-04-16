@@ -53,7 +53,7 @@ class Gallery extends MY_Controller{
 		#whith files upload
 		$config['upload_path']          = '../assets/images/photo/';
 		$config['allowed_types']        = 'jpg';
-		$size = [256,128];
+		$sizes = [256,128];
  
 		$this->load->library('upload', $config);
  
