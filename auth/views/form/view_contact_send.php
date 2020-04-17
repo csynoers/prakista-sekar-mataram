@@ -25,7 +25,7 @@
           <span class="form-control">{email}</span>
         </div>
 
-        <div class="p-1">
+        <div class="p-1 w-100">
           <div class="alert alert-success" role="alert">
             <h4 class="alert-heading">Message !</h4>
             <hr>
