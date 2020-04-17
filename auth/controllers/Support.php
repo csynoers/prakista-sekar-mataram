@@ -239,6 +239,7 @@ class Support extends MY_Controller{
 	}
 	/*====================================end logo====================================*/
 	
+	/*====================================start informasi footer====================================*/
 	public function contact_footer()
 	{
 		$this->pages= 'support/contact_footer';
@@ -249,9 +250,17 @@ class Support extends MY_Controller{
 	{
 		$this->Support_model->post= ['options_contents'=> $this->input->post('contents')];
 		if ( $this->Support_model->contact_footer_update() ) {
-			redirect(base_url('support/contact-footer/?act=update'));
+		# flashdata
+		$message = array(
+			'alert' => 'alert-success',
+			'msg' => 'Informasi footer berhasil diubah',
+		);
+
+		$this->session->set_flashdata('msg', $message);
+			redirect(base_url('support/contact-footer'));
 		}
 	}
+	/*====================================end informasi footer====================================*/
 
 	/*====================================end video footer====================================*/
 	public function video_footer()
