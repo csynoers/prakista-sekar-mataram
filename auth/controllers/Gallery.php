@@ -258,9 +258,14 @@ class Gallery extends MY_Controller{
 			'options_contents' => $this->input->post('link'),
 		];
 		$this->Gallery_model->update_video($data['post'],$data['where']);
-		redirect(base_url('gallery/video/?action=update'));
-		// header('Content-Type: application/json');
-		// echo json_encode($data);
+		# flashdata
+		$message = array(
+			'alert' => 'alert-success',
+			'msg' => 'Data gallery video berhasil diubah',
+		);
+
+		$this->session->set_flashdata('msg', $message);
+		redirect(base_url('gallery/video'));
 	}
 	public function delete_video(){
 		$data['where']=['options_id'=>$this->uri->segment(3)];
