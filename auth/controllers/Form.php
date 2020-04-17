@@ -168,7 +168,14 @@ class Form extends MY_Controller{
 		// set properties
 		$this->Form_model->form_id= $this->uri->segment(3);
 		$this->Form_model->delete_form();
-		redirect(base_url('form/contact-send/?act=delete'));
+		# flashdata
+		$message = array(
+			'alert' => 'alert-success',
+			'msg' => 'Data informasi kotak masuk/pesan berhasil dihapus',
+		);
+
+		$this->session->set_flashdata('msg', $message);
+		redirect(base_url('form/contact-send'));
 
 	}
 
