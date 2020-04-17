@@ -120,12 +120,12 @@ class MY_Controller extends CI_Controller {
 						</li>
 					</ul>
 				</li>
-				<li class="nav-item text-capitalize '.($this->uri->segment(1)=='gallery' ? 'active' : NULL).'" data-toggle="tooltip" data-placement="right" title="Tools">
+				<li class="nav-item text-capitalize '.( ($this->uri->segment(1)=='gallery') | $this->uri->segment(1)=='form' ? 'active' : NULL).'" data-toggle="tooltip" data-placement="right" title="Tools">
 					<a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseSupport" data-parent="#exampleAccordion" aria-expanded="true">
 					<i class="fa fa fa-codepen"></i>
 					<span class="nav-link-text">support</span>
 					</a>
-					<ul class="sidenav-second-level collapse '.( ($this->uri->segment(1)=='gallery') ? 'show' : NULL).'" id="collapseSupport">
+					<ul class="sidenav-second-level collapse '.( ($this->uri->segment(1)=='gallery') || ($this->uri->segment(1)=='form') ? 'show' : NULL).'" id="collapseSupport">
 						<li>
 							<a href="'.base_url('gallery/photo').'" class="'.( ($this->uri->segment(1)=='gallery' && $this->uri->segment(2)=='photo' ) || ($this->uri->segment(1)=='gallery' && $this->uri->segment(2)=='add-photo' ) || ($this->uri->segment(1)=='gallery' && $this->uri->segment(2)=='edit-photo' ) ? 'bg-secondary' : NULL).'">gallery foto</a>
 						</li>
@@ -137,7 +137,7 @@ class MY_Controller extends CI_Controller {
 						</li> -->
 						<li>
 						<li>
-							<a href="{base_url}form/contact-send">kotak masuk</a>
+							<a href="'.base_url('form/contact-send').'" class="'.( ($this->uri->segment(1)=='form' && $this->uri->segment(2)=='contact-send' ) || ($this->uri->segment(1)=='form' && $this->uri->segment(2)=='view-contact-send' ) ? 'bg-secondary' : NULL).'">kotak masuk</a>
 						</li>
 						<li>
 							<a href="{base_url}support/contact-footer">Footer</a>
