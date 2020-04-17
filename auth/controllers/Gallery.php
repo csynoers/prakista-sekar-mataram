@@ -239,9 +239,14 @@ class Gallery extends MY_Controller{
 			'options_parent' => 14,
 		];
 		$this->Gallery_model->insert_video($data['post']);
-		redirect(base_url('gallery/video/?action=insert'));
-		// header('Content-Type: application/json');
-		// echo json_encode($data);
+		# flashdata
+		$message = array(
+			'alert' => 'alert-success',
+			'msg' => 'Data gallery video berhasil ditambahkan',
+		);
+
+		$this->session->set_flashdata('msg', $message);
+		redirect(base_url('gallery/video'));
 	}
 	public function edit_video(){
 		$this->pages= 'video/edit';
