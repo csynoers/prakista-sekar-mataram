@@ -11,6 +11,7 @@ class Gallery extends MY_Controller{
 			redirect(base_url("login"));
 		}
 	}
+	/* ==================== START :: GALLERY PHOTO ==================== */
 	protected function data_photo($data_photo){
 		$data['rows']=[];
 		foreach ($data_photo as $key => $value) {
@@ -197,6 +198,28 @@ class Gallery extends MY_Controller{
 		}
 
 	}
+	public function delete_photo(){
+        $data['path']= '../assets/images/photo/';
+		$data['data_id'] = $this->input->post('id');
+        foreach ($data['data_id'] as $value) {
+			$data['data_foto'] = $this->Gallery_model->get( $value );
+
+            foreach ($data['data_foto'] as $key => $value_data_foto) {
+
+                if (file_exists($data['path'].$value_data_foto->options_contents)) {
+                    unlink($data['path'].$value_data_foto->options_contents);
+					if (file_exists($data['path']."256/".$value_data_foto->options_contents)) {
+						unlink($data['path']."256/".$value_data_foto->options_contents);
+						if (file_exists($data['path']."128/".$value_data_foto->options_contents)) {
+							unlink($data['path']."128/".$value_data_foto->options_contents);
+						}
+					}
+
+				}
+				$this->Gallery_model->delete( $value );
+            }
+        }
+    }
 	public function delete_photo_album(){
 		$this->id = $this->uri->segment(3);
 		$id_album = $this->id;
@@ -226,7 +249,9 @@ class Gallery extends MY_Controller{
 		$this->session->set_flashdata('msg', $message);
         redirect(base_url('gallery/photo'));
 	}
-
+	/* ==================== END :: GALLERY PHOTO ==================== */
+	
+	/* ==================== START :: GALLERY VIDEO ==================== */
 	public function video(){
 		$this->pages= 'video/index';
 		$this->contents['video']= $this->Gallery_model->select_video();
@@ -273,33 +298,16 @@ class Gallery extends MY_Controller{
 		redirect(base_url('gallery/video'));
 	}
 	public function delete_video(){
-		$data['where']=['options_id'=>$this->uri->segment(3)];
-		$this->Gallery_model->delete_video($data['where']);
-		redirect(base_url('gallery/video/?action=delete'));
-		// header('Content-Type: application/json');
-		// echo json_encode($data);
+		$options_id = $this->uri->segment(3);
+		$this->Gallery_model->delete( $options_id );
+		# flashdata
+		$message = array(
+			'alert' => 'alert-success',
+			'msg' => 'Data gallery video berhasil dihapus',
+		);
+
+		$this->session->set_flashdata('msg', $message);
+		redirect(base_url('gallery/video'));
 	}
-
-	public function delete_photo(){
-        $data['path']= '../assets/images/photo/';
-		$data['data_id'] = $this->input->post('id');
-        foreach ($data['data_id'] as $value) {
-			$data['data_foto'] = $this->Gallery_model->get( $value );
-
-            foreach ($data['data_foto'] as $key => $value_data_foto) {
-
-                if (file_exists($data['path'].$value_data_foto->options_contents)) {
-                    unlink($data['path'].$value_data_foto->options_contents);
-					if (file_exists($data['path']."256/".$value_data_foto->options_contents)) {
-						unlink($data['path']."256/".$value_data_foto->options_contents);
-						if (file_exists($data['path']."128/".$value_data_foto->options_contents)) {
-							unlink($data['path']."128/".$value_data_foto->options_contents);
-						}
-					}
-
-				}
-				$this->Gallery_model->delete( $value );
-            }
-        }
-    }
+	/* ==================== END :: GALLERY VIDEO ==================== */
 }
