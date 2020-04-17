@@ -31,6 +31,11 @@
               <input class="form-control" id="exampleInputName" type="text" aria-describedby="nameHelp" placeholder="Enter link" name="link" required="" value="{options_contents}">
             </div>
           </div>
+          <div class="form-row">
+            <div class="col-md-12">
+              <iframe class="mt-3 w-100" height="320" src="{options_contents}"></iframe>
+            </div>
+          </div>
         </div>
 
         <div class="form-group">
