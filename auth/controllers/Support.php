@@ -38,9 +38,9 @@ class Support extends MY_Controller{
 	public function image_link()
 	{
 		$this->pages= 'support/image_link';
-		$this->Support_model->id= $this->input->get('id');
+		$this->Support_model->id= $this->uri->segment(3);
 		$this->contents['categories']= $this->Support_model->image_link();
-		$this->Support_model->where= $this->input->get('id');
+		$this->Support_model->where= $this->uri->segment(3);
 		$this->contents['support']= $this->Support_model->image_link();
 		$this->render_pages();
 	}

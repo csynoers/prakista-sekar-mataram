@@ -152,7 +152,7 @@ class MY_Controller extends CI_Controller {
 							<a href="{base_url}support/image-link/?id=90">sidebar partner</a>
 						</li> -->
 						<li>
-							<a href="{base_url}support/image-link/?id=91">sidebar social media</a>
+							<a href="'.base_url('support/image-link/91').'" class="'.( ($this->uri->segment(1)=='support' && $this->uri->segment(2)=='image-link' && $this->uri->segment(3)=='91' ) ? 'bg-secondary' : NULL).'">social media</a>
 						</li>
 						<li>
 							<a href="{base_url}slide-show">slide show</a>
