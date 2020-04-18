@@ -158,7 +158,7 @@ class MY_Controller extends CI_Controller {
 							<a href="'.base_url('slide-show').'" class="'.( ($this->uri->segment(1)=='slide-show' ) ? 'bg-secondary' : NULL).'">slide show</a>
 						</li>
 						<li>
-							<a href="{base_url}support/contents-no-image/?id=47">Home Page</a>
+							<a href="'.base_url('support/contents-no-image/47').'" class="'.( ($this->uri->segment(1)=='support' ) && ($this->uri->segment(2)=='contents-no-image' ) && ($this->uri->segment(3)=='47' ) ? 'bg-secondary' : NULL).'">Home Page</a>
 						</li>
 						<li>
 							<a href="{base_url}support/logo-edit">Logo</a>
