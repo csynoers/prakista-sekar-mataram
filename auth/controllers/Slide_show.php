@@ -150,13 +150,19 @@ class Slide_show extends MY_Controller{
 		$this->Slide_show_model->where = ['options_id' => $this->uri->segment('3')];
 		$this->data= $this->Slide_show_model->edit_slide_show();
 		$image 	= $this->data[0]['options_image'];
-		$file 	= "../assets/images/slide_show/$image";
+		$file 	= "../assets/images/slide_show/{$image}";
 
 		if ( file_exists($file) ) {
 			unlink($file);
 		}
 		if ( $this->Slide_show_model->delete_slide_show() ) {
-			redirect(base_url("slide_show/index/?act=delete"));
+			# flashdata
+			$message = array(
+				'alert' => 'alert-success',
+				'msg' => 'Data berhasil dihapus',
+			);
+			$this->session->set_flashdata('msg', $message);	
+			redirect(base_url("slide_show"));
 		}
 
 	}
