@@ -165,29 +165,30 @@ class MY_Controller extends CI_Controller {
 						</li>
 					</ul>
 				</li>
-				<!-- <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Appearance">
+				<li class="nav-item '.($this->uri->segment(1)=='appearance' ? 'active' : NULL).'" data-toggle="tooltip" data-placement="right" title="Appearance">
 					<a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseExampleAppearance" data-parent="#exampleAccordion">
-					<i class="fa fa-fw fa-paint-brush"></i>
-					<span class="nav-link-text">Appearance</span>
+						<i class="fa fa-fw fa-paint-brush"></i>
+						<span class="nav-link-text">Appearance</span>
 					</a>
-					<ul class="sidenav-second-level collapse" id="collapseExampleAppearance">
-					<li>
-						<a href="{base_url}hukum">Themes</a>
-					</li>
-					<li>
-						<a href="{base_url}hukum">Customize</a>
-					</li>
-					<li>
-						<a href="{base_url}hukum">Widgets</a>
-					</li>
-					<li>
-						<a href="{base_url}hukum">Menus</a>
-					</li>
-					<li>
-						<a href="{base_url}hukum">Background</a>
-					</li>
+					<ul class="sidenav-second-level collapse '.($this->uri->segment(1)=='appearance' ? 'show' : NULL).'" id="collapseExampleAppearance">
+						<!--<li>
+							<a href="{base_url}hukum">Themes</a>
+						</li>
+						<li>
+							<a href="{base_url}hukum">Customize</a>
+						</li>
+						<li>
+							<a href="{base_url}hukum">Widgets</a>
+						</li>-->
+						<li>
+							<a href="'.base_url('appearance/menus').'" class="'.( ($this->uri->segment(1)=='appearance' ) && ($this->uri->segment(2)=='menus' ) ? 'bg-secondary' : NULL).'">Menus</a>
+						</li>
+						<li>
+							<a href="{base_url}hukum">Background</a>
+						</li>
 					</ul>
 				</li>
+				<!--
 				<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Plugins">
 					<a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseExamplePlugins" data-parent="#exampleAccordion">
 					<i class="fa fa-fw fa-plug"></i>
