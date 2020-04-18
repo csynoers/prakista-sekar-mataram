@@ -279,7 +279,14 @@ class Support extends MY_Controller{
 			$this->messages['message']= $this->upload->display_errors();
 			$this->pages= 'support/logo_edit';
 			$this->contents['support']= $this->Support_model->logo_edit();
-			$this->render_page_messages();
+			# flashdata
+			$message = array(
+				'alert' => 'alert-success',
+				'msg' => 'Data berhasil diubah',
+			);
+
+			$this->session->set_flashdata('msg', $message);
+			$this->render_pages();
 		}
 		else{
 			$fileData = $this->upload->data();
