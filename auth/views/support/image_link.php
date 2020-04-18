@@ -11,8 +11,8 @@
 
   <!--tambah produk-->
   <div class="card mb-3">
-    <div class="card-header">
-      <i class="fa fa-plus-square-o" aria-hidden="true"></i> Add New Banner</div>
+    <div class="card-header text-capitalize">
+      <i class="fa fa-plus-square-o" aria-hidden="true"></i> Add {categories}{options_title}{/categories}</div>
     <div class="card-body">
       <form enctype="multipart/form-data" method="POST" action="<?php echo base_url() ?>support/image-link-insert">
         <div class="form-group">

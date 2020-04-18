@@ -47,18 +47,32 @@ class Support extends MY_Controller{
 
 	public function image_link_insert()
 	{
-		$config['upload_path']= '../assets/images/image_link';
+		# get option parent
+		$options_parent = $this->input->post('options_parent');
+
+		$config['upload_path']= '../assets/images/image_link/';
 		$config['allowed_types']= 'gif|jpg|png';
 		$this->load->library('upload', $config);
  
 		if ( ! $this->upload->do_upload('fupload')){
-			$this->pages= 'support/image_link';
-			$this->messages['message']= $this->upload->display_errors();
-			$this->Support_model->id= $this->input->post('options_parent');
+			$this->pages= "support/image_link";
+			
+			# send to model
+			$this->Support_model->id= $options_parent;
 			$this->contents['categories']= $this->Support_model->image_link();
-			$this->Support_model->where= $this->input->post('options_parent');
+			
+			# send to model
+			$this->Support_model->where= $options_parent;
 			$this->contents['support']= $this->Support_model->image_link();
-			$this->render_page_messages();	
+
+			# flashdata
+			$message = array(
+				'alert' => 'alert-warning',
+				'msg' => $this->upload->display_errors(),
+			);
+
+			$this->session->set_flashdata('msg', $message);
+			$this->render_pages();	
 
 		}else{
 			$fileData = $this->upload->data();
@@ -75,15 +89,28 @@ class Support extends MY_Controller{
 			$this->image_lib->initialize($config);
 			$this->image_lib->resize();
 			// end image resize
+
+			# load string helper
 			$this->load->helper('string');
+
+			# send to model
 			$this->Support_model->post	= [
 				'options_title'     	=> $this->input->post('title'),
 				'options_contents' 		=> json_encode(['options_link'=>$this->input->post('link'),'options_image'=>$fileData['file_name']]),
 				'options_seo' 			=> seo_title($this->input->post('title')),
 				'options_parent'		=> $this->input->post('options_parent'),
 			];
+
+			# proses store if TRUE 
 			if ( $this->Support_model->image_link_insert() ) {
-				redirect(base_url('support/image-link/?id='.$this->input->post('options_parent').'&act=insert'));
+				# flashdata
+				$message = array(
+					'alert' => 'alert-success',
+					'msg' => 'Data berhasil disimpan',
+				);
+
+				$this->session->set_flashdata('msg', $message);
+				redirect(base_url("support/image-link/{$options_parent}"));
 			}
 
 		}
