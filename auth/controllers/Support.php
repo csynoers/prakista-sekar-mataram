@@ -225,16 +225,30 @@ class Support extends MY_Controller{
 
 	public function image_link_delete()
 	{
+		$config['upload_path']          = '../assets/images/image_link/';
+
+		# get id
 		$this->Support_model->id= $this->uri->segment(3);
+
+		# get rows from model
 		$this->rows= $this->Support_model->image_link_edit();
-		if ( file_exists('../assets/images/image_link/'.$this->rows[0]['options_image']) ) {
-			unlink('../assets/images/image_link/'.$this->rows[0]['options_image']);
-			if ( file_exists('../assets/images/image_link/thumb/'.$this->rows[0]['options_image']) ) {
-				unlink('../assets/images/image_link/thumb/'.$this->rows[0]['options_image']);
+
+		# unlink image
+		if ( file_exists($config['upload_path'].$this->rows[0]['options_image']) ) {
+			unlink($config['upload_path'].$this->rows[0]['options_image']);
+			if ( file_exists($config['upload_path'].'thumb/'.$this->rows[0]['options_image']) ) {
+				unlink($config['upload_path'].'thumb/'.$this->rows[0]['options_image']);
 			}
 		}
 		if ( $this->Support_model->image_link_delete() ) {
-			redirect(base_url("support/image-link/?id=".$this->rows[0]['options_parent'].'&act=delete'));
+			# flashdata
+			$message = array(
+				'alert' => 'alert-success',
+				'msg' => 'Data berhasil dihapus',
+			);
+
+			$this->session->set_flashdata('msg', $message);
+			redirect(base_url("support/image-link/".$this->rows[0]['options_parent']));
 		}
 
 	}
