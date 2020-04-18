@@ -34,7 +34,13 @@ class User extends MY_Controller{
 
 		if ( $this->Data_model->update_data_where() )
 		{
-			redirect(base_url('user/edit/?act=update'));
+			# flashdata
+			$message = array(
+				'alert' => 'alert-success',
+				'msg' => 'Informasi profil kamu berhasil diubah',
+			);
+			$this->session->set_flashdata('msg', $message);	
+			redirect(base_url('user/edit'));
 		}
 
 	}
