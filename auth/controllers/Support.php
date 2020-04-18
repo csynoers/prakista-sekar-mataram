@@ -141,36 +141,54 @@ class Support extends MY_Controller{
 			];
 
 			if ( $this->Support_model->image_link_update() ) {
-				redirect(base_url("support/image-link/?id=".$this->rows[0]['options_parent'].'&act=update'));
+				# flashdata
+				$message = array(
+					'alert' => 'alert-success',
+					'msg' => 'Data berhasil diubah',
+				);
+
+				$this->session->set_flashdata('msg', $message);
+				redirect(base_url("support/image-link/".$this->rows[0]['options_parent']));
 			}
 
 		}else{#update with image
-			$config['upload_path']          = '../assets/images/image_link';
+			$config['upload_path']          = '../assets/images/image_link/';
 			$config['allowed_types']        = 'gif|jpg|png';	 
 			$this->load->library('upload', $config);
 	 
 			if ( ! $this->upload->do_upload('fupload')){
 				$this->pages= 'support/image_link_edit';
 				$this->Support_model->id= $this->input->post('id');
-				$this->messages['message']= $this->upload->display_errors();
+
 				$this->contents['support']= $this->Support_model->image_link_edit();
-				$this->render_page_messages();
+				$message = array(
+					'alert' => 'alert-warning',
+					'msg' => $this->upload->display_errors(),
+				);
+
+				$this->session->set_flashdata('msg', $message);
+				$this->render_pages();
 
 			}else{
 				$this->Support_model->id= $this->input->post('id');
 				$this->rows= $this->Support_model->image_link_edit();
-				if ( file_exists('../assets/images/image_link/'.$this->rows[0]['options_image']) ) {
-					unlink('../assets/images/image_link/'.$this->rows[0]['options_image']);
-					if ( file_exists('../assets/images/image_link/thumb/'.$this->rows[0]['options_image']) ) {
-						unlink('../assets/images/image_link/thumb/'.$this->rows[0]['options_image']);
+
+				# unlink image
+				if ( file_exists($config['upload_path'].$this->rows[0]['options_image']) ) {
+					unlink($config['upload_path'].$this->rows[0]['options_image']);
+					if ( file_exists($config['upload_path'].'thumb/'.$this->rows[0]['options_image']) ) {
+						unlink($config['upload_path'].'thumb/'.$this->rows[0]['options_image']);
 					}
 				}
+
+				# do upload image
 				$fileData = $this->upload->data();
+
 				// image resize
 				$this->load->library('image_lib');
 				$config['image_library']= 'gd2';
 				$config['source_image']= $fileData['full_path'];
-				$config['new_image']= '../assets/images/image_link/thumb/'.$fileData['file_name'];
+				$config['new_image']= "{$config['upload_path']}thumb/{$fileData['file_name']}";
 				$config['create_thumb']= FALSE;
 				$config['maintain_ratio']= TRUE;
 				$config['height']= empty($this->input->post('height_thumb')) ? 0 : $this->input->post('height_thumb');
@@ -179,17 +197,26 @@ class Support extends MY_Controller{
 				$this->image_lib->initialize($config);
 				$this->image_lib->resize();
 				// end image resize
+
 				$this->load->helper('string');
 				$this->Support_model->post	= [
-					'options_title' 		=> $this->input->post('title'),
-					'options_contents'  	=> json_encode([
-						'options_link'=>$this->input->post('link'),
-						'options_image'=>$fileData['file_name'],
-					]),
-					'options_seo' 			=> seo_title($this->input->post('title')),
+					'options_title' 	=> $this->input->post('title'),
+					'options_contents'	=> json_encode(
+						array(
+							'options_link' 	=> $this->input->post('link'),
+							'options_image' => $fileData['file_name'],
+						)
+					),
+					'options_seo' 		=> seo_title($this->input->post('title')),
 				];
 				if ( $this->Support_model->image_link_update() ) {
-					redirect(base_url("support/image-link/?id=".$this->rows[0]['options_parent'].'&act=update'));
+					$message = array(
+						'alert' => 'alert-success',
+						'msg' => 'Data berhasil diubah',
+					);
+	
+					$this->session->set_flashdata('msg', $message);
+					redirect(base_url("support/image-link/".$this->rows[0]['options_parent']));
 				}
 
 			}
