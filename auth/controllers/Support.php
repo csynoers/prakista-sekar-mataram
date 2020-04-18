@@ -17,19 +17,27 @@ class Support extends MY_Controller{
 	public function contents_no_image()
 	{
 		$this->pages= 'support/contents_no_image';
-		$this->Support_model->id= $this->input->get('id');
+		$this->Support_model->id= $this->uri->segment(3);
 		$this->contents['support']= $this->Support_model->contents_no_image_edit();
 		$this->render_pages();
 	}
 	public function contents_no_image_update()
 	{
-		$this->Support_model->id= $this->input->post('id');
+		$id = $this->input->post('id');
+		$this->Support_model->id= $id;
 		$this->Support_model->post= [
 			'options_title'=> $this->input->post('title'),
 			'options_contents'=> $this->input->post('contents'),
 		];
 		if ( $this->Support_model->contents_no_image_update() ) {
-			redirect( base_url('support/contents-no-image/?id='.$this->input->post('id').'&act=update') );
+			# flashdata
+			$message = array(
+				'alert' => 'alert-success',
+				'msg' => 'Data berhasil diubah',
+			);
+
+			$this->session->set_flashdata('msg', $message);
+			redirect( base_url('support/contents-no-image/'.$id) );
 		}
 	}
 	/*====================================end contents_no_image====================================*/
