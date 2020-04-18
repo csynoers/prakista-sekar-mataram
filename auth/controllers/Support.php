@@ -276,13 +276,12 @@ class Support extends MY_Controller{
 		$this->load->library('upload', $config);
 		if ( ! $this->upload->do_upload('fupload'))
 		{
-			$this->messages['message']= $this->upload->display_errors();
 			$this->pages= 'support/logo_edit';
 			$this->contents['support']= $this->Support_model->logo_edit();
 			# flashdata
 			$message = array(
-				'alert' => 'alert-success',
-				'msg' => 'Data berhasil diubah',
+				'alert' => 'alert-warning',
+				'msg' => $this->upload->display_errors(),
 			);
 
 			$this->session->set_flashdata('msg', $message);
@@ -316,6 +315,13 @@ class Support extends MY_Controller{
 			$this->post= ['options_contents'=>json_encode(['options_image'=> $fileData['file_name'] ])];
 
 			if ( $this->Support_model->logo_update() ) {
+				# flashdata
+				$message = array(
+					'alert' => 'alert-success',
+					'msg' => 'Data berhasil diubah',
+				);
+
+				$this->session->set_flashdata('msg', $message);
 				redirect(base_url('support/logo-edit'));
 			}
 		}
