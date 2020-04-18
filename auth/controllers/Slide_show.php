@@ -18,48 +18,47 @@ class Slide_show extends MY_Controller{
 	}
 
 	function insert(){
-		$config['upload_path']          = '../assets/images/slide_show';
+		$config['upload_path']          = '../assets/images/slide_show/';
 		$config['allowed_types']        = 'gif|jpg|png';
  
 		$this->load->library('upload', $config);
  
 		if ( ! $this->upload->do_upload('fupload')){
-			$error = array('error' => $this->upload->display_errors());
-
-			$message= array(
-				'message' => $error['error'],
+			$this->pages= 'slide_show/index';
+			$this->contents['slide_show'] = $this->Slide_show_model->select_slide_show();
+			# flashdata
+			$message = array(
+				'alert' => 'alert-success',
+				'msg' => $this->upload->display_errors(),
 			);
-
-			$data= array(
-				'slide_show'=>$this->Slide_show_model->select_slide_show()
-			);
-			$this->load->view('header');
-			$this->load->view('navigation');
-			$this->parser->parse('website/message',$message);
-			$this->parser->parse('slide_show/index',$data);
-			$this->load->view('footer');	
+			
+			$this->session->set_flashdata('msg', $message);	
+			$this->render_pages();
 
 		}else{
-			$data = [];
+			# get data upload
 			$image = $this->upload->data();
+
 			$data['table'] = 'options';
 
 			$this->load->helper('string');
 			$data['post']	= array(
-				// 'options_title'     	=> $this->input->post('title'),
 				'options_contents' 		=> json_encode([
-					// 'options_link'=>$this->input->post('link'),
 					'options_caption'=>$this->input->post('caption'),
 					'options_image'=>$image['file_name']
 				]),
-				// 'options_seo' 		=> seo_title($this->input->post('title')),
 				'options_parent'		=> '11',
 			);
-			$this->Slide_show_model->insert_slide_show($data['table'],$data['post']);
-			redirect(base_url("slide_show/index/?act=insert"));
-			// echo "<pre>";
-			// print_r($data);
 
+			$this->Slide_show_model->insert_slide_show($data['table'],$data['post']);
+			# flashdata
+			$message = array(
+				'alert' => 'alert-success',
+				'msg' => 'Data berhasil ditambahkan',
+			);
+			
+			$this->session->set_flashdata('msg', $message);	
+			redirect(base_url("slide_show"));
 		}
 
 	}
