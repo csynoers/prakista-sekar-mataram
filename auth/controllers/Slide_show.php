@@ -77,54 +77,70 @@ class Slide_show extends MY_Controller{
 			$this->rows= $this->Slide_show_model->edit_slide_show();
 			$this->load->helper('string');
 			$this->post= [
-				// 'options_title'=>$this->input->post('title'),
 				'options_contents'=>json_encode([
-					// 'options_link'=>$this->input->post('link'),
 					'options_caption'=>$this->input->post('caption'),
 					'options_image'=>$this->rows[0]['options_image'],
 				]),
-				// 'options_seo'=>seo_title($this->input->post('title'))
 			];
 			if ( $this->Slide_show_model->update_slide_show() ) {
-				redirect(base_url("slide_show/index/update/?act=update"));
+				# flashdata
+				$message = array(
+					'alert' => 'alert-success',
+					'msg' => 'Data berhasil diubah',
+				);
+				$this->session->set_flashdata('msg', $message);	
+				redirect(base_url("slide-show"));
 			}
 
 		}else{#update with image
-			$config['upload_path']          = '../assets/images/slide_show';
+			$config['upload_path']          = '../assets/images/slide_show/';
 			$config['allowed_types']        = 'gif|jpg|png';
 	 
 			$this->load->library('upload', $config);
 	 
 			if ( ! $this->upload->do_upload('fupload')){
 				$this->pages= 'slide_show/edit';
-				$this->messages['message']= $this->upload->display_errors()."max_width : 1500px and max_height : 600px";
 				$this->Slide_show_model->where= ['options_id' => $this->input->post('id')];
 				$this->contents['slide_show']= $this->Slide_show_model->edit_slide_show();
-				$this->render_page_messages();
+				# flashdata
+				$message = array(
+					'alert' => 'alert-success',
+					'msg' => $this->upload->display_errors(),
+				);
+				$this->session->set_flashdata('msg', $message);	
+				$this->render_pages();
 			}else{
 				$this->Slide_show_model->where= ['options_id' => $this->input->post('id')];
 				$this->data= $this->Slide_show_model->edit_slide_show();
+
 				$image 	= $this->data[0]['options_image'];
-				$file 	= "../assets/images/slide_show/$image";
+				$file 	= "{$config['upload_path']}{$image}";
 
 				if ( file_exists($file) ) {
 					unlink($file);
 				}
 
+				# get data upload
 				$image = $this->upload->data();
+
+				# load string helper
 				$this->load->helper('string');
+
 				$this->Slide_show_model->post= [
-					// 'options_title'=> $this->input->post('title'),
 					'options_contents'=> json_encode([
-						// 'options_link'=> $this->input->post('link'),
 						'options_caption'=> $this->input->post('caption'),
 						'options_image'=> $image['file_name'],
 					]),
-					// 'options_seo' => seo_title($this->input->post('title')),
 				];
 
 				if ( $this->Slide_show_model->update_slide_show() ) {
-					redirect(base_url("slide_show/index/update/?act=update"));
+					# flashdata
+					$message = array(
+						'alert' => 'alert-success',
+						'msg' => 'Data berhasil diubah',
+					);
+					$this->session->set_flashdata('msg', $message);	
+					redirect(base_url("slide-show"));
 				}
 			}
 		}
