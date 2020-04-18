@@ -219,20 +219,20 @@ class MY_Controller extends CI_Controller {
 						</li>
 					</ul>
 				</li>
-				<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Users">
+				<li class="nav-item  '.($this->uri->segment(1)=='user' ? 'active' : NULL).'" data-toggle="tooltip" data-placement="right" title="Users">
 					<a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponentsUsers" data-parent="#exampleAccordion">
 					<i class="fa fa-fw fa-user-circle-o"></i>
 					<span class="nav-link-text">Users</span>
 					</a>
-					<ul class="sidenav-second-level collapse" id="collapseComponentsUsers">
-					<li>
+					<ul class="sidenav-second-level collapse '.($this->uri->segment(1)=='user' ? 'show' : NULL).'" id="collapseComponentsUsers">
+					<!--<li>
 						<a href="'.base_url('user').'">All Users</a>
 					</li>
 					<li>
 						<a href="'.base_url('user/add').'">Add New</a>
-					</li>
+					</li>-->
 					<li>
-						<a href="'.base_url('user/edit').'">Your Profile</a>
+						<a href="'.base_url('user/edit').'" class="'.( ($this->uri->segment(1)=='user' && $this->uri->segment(2)=='edit') ? 'bg-secondary' : NULL).'">Your Profile</a>
 					</li>
 					</ul>
 				</li>
