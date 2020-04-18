@@ -120,12 +120,12 @@ class MY_Controller extends CI_Controller {
 						</li>
 					</ul>
 				</li>
-				<li class="nav-item text-capitalize '.( ($this->uri->segment(1)=='gallery') || ($this->uri->segment(1)=='form') || ($this->uri->segment(1)=='support') ? 'active' : NULL).'" data-toggle="tooltip" data-placement="right" title="Tools">
+				<li class="nav-item text-capitalize '.( ($this->uri->segment(1)=='gallery') || ($this->uri->segment(1)=='form') || ($this->uri->segment(1)=='support') || ($this->uri->segment(1)=='slide-show') ? 'active' : NULL).'" data-toggle="tooltip" data-placement="right" title="Tools">
 					<a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseSupport" data-parent="#exampleAccordion" aria-expanded="true">
 					<i class="fa fa fa-codepen"></i>
 					<span class="nav-link-text">support</span>
 					</a>
-					<ul class="sidenav-second-level collapse '.( ($this->uri->segment(1)=='gallery') || ($this->uri->segment(1)=='form') || ($this->uri->segment(1)=='support') ? 'show' : NULL).'" id="collapseSupport">
+					<ul class="sidenav-second-level collapse '.( ($this->uri->segment(1)=='gallery') || ($this->uri->segment(1)=='form') || ($this->uri->segment(1)=='support') || ($this->uri->segment(1)=='slide-show') ? 'show' : NULL).'" id="collapseSupport">
 						<li>
 							<a href="'.base_url('gallery/photo').'" class="'.( ($this->uri->segment(1)=='gallery' && $this->uri->segment(2)=='photo' ) || ($this->uri->segment(1)=='gallery' && $this->uri->segment(2)=='add-photo' ) || ($this->uri->segment(1)=='gallery' && $this->uri->segment(2)=='edit-photo' ) ? 'bg-secondary' : NULL).'">gallery foto</a>
 						</li>
@@ -155,7 +155,7 @@ class MY_Controller extends CI_Controller {
 							<a href="'.base_url('support/image-link/91').'" class="'.( ($this->uri->segment(1)=='support' && $this->uri->segment(2)=='image-link' && $this->uri->segment(3)=='91' ) ? 'bg-secondary' : NULL).'">social media</a>
 						</li>
 						<li>
-							<a href="{base_url}slide-show">slide show</a>
+							<a href="'.base_url('slide-show').'" class="'.( ($this->uri->segment(1)=='slide-show' ) ? 'bg-secondary' : NULL).'">slide show</a>
 						</li>
 						<li>
 							<a href="{base_url}support/contents-no-image/?id=47">Home Page</a>
