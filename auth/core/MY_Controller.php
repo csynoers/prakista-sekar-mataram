@@ -16,8 +16,8 @@ class MY_Controller extends CI_Controller {
         $this->load->model( ['Header_model'] );
         $this->header['base_url'] = base_url();
         $this->header['icon'] = $this->Header_model->icon();
-        $this->contents['base_url'] = base_url();
-        $this->navigation['base_url']= base_url();
+		$this->contents['base_url'] = base_url();
+		
         // now('Asia/Jakarta');
         // $this->load->model( ['Seo_model','Navigation_model','Sidebar_right_model','Footer_model'] );
     }
@@ -26,36 +26,6 @@ class MY_Controller extends CI_Controller {
     {
 		$this->parser->parse( 'header', $this->header );
 		$this->parser->parse( 'navigation', $this->navigation() );
-
-		if ( ! empty($this->session->flashdata('msg')) )
-		{
-			$this->parser->parse('website/message', $this->session->flashdata('msg'));
-		}
-
-		if ( !empty( $this->input->get('act') ) )
-		{
-			switch ( $this->input->get('act') ) {
-				case 'insert':
-					$message= [ 'message' => 'Data Berhasil Ditambahkan' ];
-					# code...
-					break;
-				case 'update':
-					$message= [ 'message' => 'Data Berhasil Diupdate' ];
-					# code...
-					break;
-				case 'delete':
-					$message= [ 'message' => 'Data Berhasil Dihapus' ];
-					# code...
-					break;
-				
-				default:
-					# code...
-					break;
-			}
-
-			$this->parser->parse('website/message', $message);
-		}
-
 		$this->parser->parse( $this->pages, $this->contents );
 		$this->parser->parse( 'footer', [ 'base_url' => base_url() ] );
 		
@@ -63,22 +33,11 @@ class MY_Controller extends CI_Controller {
 		// print_r($this->contents);
 		// echo "</pre>";
     }
-    public function render_page_messages()
-    {
-		$this->parser->parse( 'header', [ 'base_url' => base_url() ] );
-		$this->parser->parse( 'navigation', $this->navigation );
-		$this->parser->parse('website/message',$this->messages);
-		$this->parser->parse( $this->pages, $this->contents );
-		$this->parser->parse( 'footer', [ 'base_url' => base_url() ] );
-		
-		// echo "<pre>";
-		// print_r($this->contents);
-		// echo "</pre>";
-	}
 	
 	protected function navigation()
 	{
 		return array(
+			'base_url'=>base_url(),
 			'navigation' => '
 				<li class="nav-item '.($this->uri->segment(1)=='admin' ? 'active' : NULL).'" data-toggle="tooltip" data-placement="right" title="Dashboard">
 					<a class="nav-link" href="'.base_url('admin').'">
