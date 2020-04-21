@@ -215,9 +215,13 @@ class Post_model extends CI_Model{
 		return $this->data_mp();
 	}
 
-	public function categories_sub(){
+	public function categories_sub($id=NULL){
 		$this->actions= 'categories_sub';
-		$this->rows= $this->db->get_where('options', $this->where_parents)->result_object();
+		if ($id) {
+			$this->rows= $this->db->get_where('options', ['options_parent'=>$id])->result_object();
+		} else {
+			$this->rows= $this->db->get_where('options', $this->where_parents)->result_object();
+		}
 		return $this->data_mp();
 
 	}
