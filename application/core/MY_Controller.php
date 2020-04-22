@@ -40,7 +40,7 @@ class MY_Controller extends CI_Controller {
         $this->header['seo_description']= $this->Header_model->seo_description();
         $this->navigation['base_url']= $this->url;
         $this->navigation['logo']= $this->logo;
-        $this->navigation['navigation'] = $this->nav_menu;
+        $this->navigation['navs']= $this->navs();
         $this->sidebar['base_url']= $this->url;
         $this->sidebar['sidebar_left_informasi']= $this->Sidebar_left_model->sidebar_left_informasi();
         $this->sidebar['sidebar_left_partner']= $this->Sidebar_left_model->image_link(90);
@@ -92,6 +92,12 @@ class MY_Controller extends CI_Controller {
         // echo "<pre>";
         // print_r($this->pages);
         // echo "</pre>";
+    }
+
+    public function navs()
+    {
+        $this->load->model('Options_model');
+        return json_decode($this->Options_model->get('options_id',189)[0]->options_contents);
     }
 
 }

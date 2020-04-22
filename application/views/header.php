@@ -7,20 +7,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <head>
   <meta charset="utf-8">
   <title>{seo_title}</title>
+  <link rel="shortcut icon" href="{base_url}assets/images/website/{icon}" />
   <meta name="description" content="{seo_description}">
   <meta name="keywords" content="{seo_keyword}">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-
   <!-- Theme skin -->
-  <meta name="author" content="csynoers">
-
-  <link rel="shortcut icon" href="{base_url}assets/images/website/{icon}" />
-  <!-- Bootstrap Core CSS -->
-  <link href="{base_url}library/template/css/bootstrap.css" rel="stylesheet">
-  <link href="{base_url}library/template/css/style.css?v=<?php echo date('Y-m-d his')?>" rel="stylesheet">
-  <link href="{base_url}library/template/fonts/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-  <script src="{base_url}library/template/js/jquery.js"></script>
+  <meta name="author" content="ruangwebsite">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 
   <!-- =======================================================
     Theme Name: custom boostrap 4 by SCM
@@ -28,6 +24,5 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 </head>
 
 <body>
-  <div class="container-fluid">
-    <div class="panel panel-default" style="margin-top: 20px"> 
-      <div class="panel-body">
+  <div id="wrapAll" class="card m-3">
+    <div class="card-body">

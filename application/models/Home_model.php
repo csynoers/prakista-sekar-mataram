@@ -28,6 +28,7 @@ class Home_model extends CI_Model {
 					$this->sub_val['base_url']=base_url();
 					$this->mp[]=[
 						// 'base_url'=> base_url(),
+	                    'options_id' => $value->options_id,
 	                    'options_title' => $value->options_title,
 	                    'options_contents' => [$this->sub_val],
 					];

@@ -14,44 +14,33 @@
       </ul>
     </div>
   </nav>
-
-  <nav class="navbar navbar-inverse">
-      <div class="container-fluid">
-          <!-- <div class="navbar-header page-scroll">
-              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-                  <span class="sr-only">Menu</span>
-                  <span class="icon-bar"></span>
-                  <span class="icon-bar"></span>
-                  <span class="icon-bar"></span>
-              </button>
-          </div> -->
-
-          <ul class="cs-nav nav navbar-nav">
-            <li class="<?= empty($this->uri->segment(1))? 'active' : NULL ; ?>"><a href="{base_url}">Beranda</a></li>
-            <li><a href="<?= base_url('profil/') ?>">Tentang Kami</a></li>
-            <li class="dropdown">
-              <a class="dropdown-toggle" data-toggle="dropdown" href="#">Produk
-              <span class="caret"></span></a>
-              <ul class="dropdown-menu">
-                <li><a href="#">Kategori Satu</a></li>
-                <li><a href="#">Kategori Dua</a></li>
-              </ul>
-            </li>
-            <li><a href="{base_url}">Artikel</a></li>
-            <li class="dropdown">
-              <a class="dropdown-toggle" data-toggle="dropdown" href="#">Galeri
-              <span class="caret"></span></a>
-              <ul class="dropdown-menu">
-                <li><a href="#">Foto</a></li>
-                <li><a href="#">Video</a></li>
-              </ul>
-            </li>
-            <li><a href="{link}">Hubungi Kami</a></li>
-            <!-- {navigation}
-              <li><a href="{link}">{title}</a></li>
-            {/navigation} -->
-          </ul>
-      </div>
+  
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <!-- <a class="navbar-brand" href="#">Navbar w/ text</a> -->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarText">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link ml-3 mr-3 font-weight-bold" href="{base_url}">Home <span class="sr-only">(current)</span></a>
+        </li>
+        {navs}
+          <li class="nav-item {li_class}">
+            <a class="nav-link ml-3 mr-3 font-weight-bold {a_class}" href="<?= base_url('{href}') ?>" data-toggle="{a_data_toggle}">{title}</a>
+            <!-- Dropdown -->
+            <div class="dropdown-menu">
+              {rows}
+                <a class="dropdown-item font-weight-bold" href="<?= base_url('{href}') ?>">{title}</a>
+              {/rows}
+            </div>
+          </li>
+        {/navs}
+      </ul>
+      <!-- <span class="navbar-text">
+        Navbar text with an inline element
+      </span> -->
+    </div>
   </nav>
 
 <!--================Header Menu Area =================-->

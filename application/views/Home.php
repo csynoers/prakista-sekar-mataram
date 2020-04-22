@@ -1,18 +1,18 @@
-  <div id="contentWrapper" class="container-fluid">
+  <div id="contentWrapper" class="container-fluidXXX">
     <br>
     <div id="myCarousel" class="carousel slide" data-ride="carousel">
       <!-- Indicators -->
-      <ol class="carousel-indicators">
+      <ul class="carousel-indicators">
         {slider}
-        <li data-target="#demo" data-slide-to="{options_id}"></li>
+        <li data-target="#myCarousel" data-slide-to="{options_id}"></li>
         {/slider}
-      </ol>
+      </ul>
 
       <!-- Wrapper for slides -->
-      <div class="carousel-inner" role="listbox">
+      <div class="carousel-inner">
         {slider}
-        <div class="item" data-link="{options_link}">
-          <img style="width: 100%" title="{options_title}" src="{options_contents}{base_url}assets/images/slide_show/{options_image}{/options_contents}" alt="" width="" height="">
+        <div class="carousel-item" data-bg-src="{options_contents}{base_url}assets/images/slide_show/{options_image}{/options_contents}">
+          <!-- <img title="{options_title}" src="{options_contents}{base_url}assets/images/slide_show/{options_image}{/options_contents}" alt="" width="" height=""> -->
           <div class="carousel-caption hidden-xs">
             {options_contents}{options_caption}{/options_contents}
           </div>
@@ -22,13 +22,11 @@
       </div>
 
       <!-- Left and right controls -->
-      <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
-        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-        <span class="sr-only">Previous</span>
+      <a class="carousel-control-prev" href="#myCarousel" data-slide="prev">
+        <span class="carousel-control-prev-icon"></span>
       </a>
-      <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
-        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-        <span class="sr-only">Next</span>
+      <a class="carousel-control-next" href="#myCarousel" data-slide="next">
+        <span class="carousel-control-next-icon"></span>
       </a>
     </div>
   </div>

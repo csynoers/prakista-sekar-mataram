@@ -37,13 +37,16 @@ class Appearance extends MY_Controller{
 			foreach ($value['rows'] as $key_level_1 => $value_level_1) {
 				$level_1[] = [
 					'pages' => 'category_level_1',
-					'link' => "category/{$value['options_id']}/{$value_level_1['options_id']}",
+					'href' => "category/{$value['options_id']}/{$value_level_1['options_id']}",
 					'title' => $value_level_1['options_title'],
 				];
 			}
 			$nav = [
 				'pages' => 'category',
-				'link' => "category/{$value['options_id']}",
+				'href' => count($level_1) > 0 ? '#' : "category/{$value['options_id']}",
+				'li_class' => count($level_1) > 0 ? 'dropdown' : NULL ,
+				'a_class' => count($level_1) > 0 ? 'dropdown-toggle' : NULL ,
+				'a_data_toggle' => count($level_1) > 0 ? 'dropdown' : NULL ,
 				'title' => $value['options_title'],
 				'rows' => $level_1,
 			];
@@ -54,7 +57,10 @@ class Appearance extends MY_Controller{
 		foreach ($data['pages'] as $key => $value) {
 			$nav = [
 				'pages' => 'page',
-				'link' => "page/{$value['pages_id']}",
+				'href' => "page/{$value['pages_id']}",
+				'li_class' => NULL ,
+				'a_class' => NULL ,
+				'a_data_toggle' => NULL ,
 				'title' => $value['pages_title'],
 				'rows' => [],
 			];
@@ -63,17 +69,20 @@ class Appearance extends MY_Controller{
 		}
 		$nav = [
 			'pages' => 'gallery',
-			'link' => "gallery",
+			'href' => '#',
+			'li_class' => 'dropdown',
+			'a_class' => 'dropdown-toggle',
+			'a_data_toggle' => 'dropdown',
 			'title' => 'Galeri',
 			'rows' => [
 				[
 					'pages' => 'gallery',
-					'link' => "gallery/foto",
+					'href' => "gallery/foto",
 					'title' => 'Galeri Foto',
 				],
 				[
 					'pages' => 'gallery',
-					'link' => "gallery/video",
+					'href' => "gallery/video",
 					'title' => 'Galeri Video',
 				],
 			]

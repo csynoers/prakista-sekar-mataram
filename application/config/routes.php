@@ -50,6 +50,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |		my-controller/my-method	-> my_controller/my_method
 */
 $route['default_controller'] = 'home';
+$route['category/(:any)'] = 'category/index';
 $route['aksi-daftar'] = 'form/aksi_daftar';
 $route['contact-send'] = 'form/contact_send';
 $route['json/(:any)'] = 'json/index';
