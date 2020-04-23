@@ -4,7 +4,7 @@
     <div class="container">
       <div class="row">
         <div class="col-sm-5 topFoot">
-          <p>© <?= date('Y') ?> Prakista. All rights reserved.</p>
+          <p>© <?= date('Y') ?> Prakasita. All rights reserved.</p>
         </div>
       </div>
     </div>

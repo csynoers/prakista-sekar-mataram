@@ -40,6 +40,7 @@ class MY_Controller extends CI_Controller {
         $this->header['seo_description']= $this->Header_model->seo_description();
         $this->navigation['base_url']= $this->url;
         $this->navigation['logo']= $this->logo;
+        $this->navigation['social_media']= $this->social_media();
         $this->navigation['navs']= $this->navs();
         $this->sidebar['base_url']= $this->url;
         $this->sidebar['sidebar_left_informasi']= $this->Sidebar_left_model->sidebar_left_informasi();
@@ -55,6 +56,9 @@ class MY_Controller extends CI_Controller {
         $this->footer['navigation']= $this->nav_menu;
         $this->footer['logo']= $this->logo;
         $this->footer['contact_footer']= $this->Footer_model->contact_footer();
+        // echo '<pre>';
+        // print_r($this->navigation);
+        // echo '</pre>';
 
     }
 
@@ -98,6 +102,16 @@ class MY_Controller extends CI_Controller {
     {
         $this->load->model('Options_model');
         return json_decode($this->Options_model->get('options_id',189)[0]->options_contents);
+    }
+    public function social_media()
+    {
+        $this->load->model('Options_model');
+        $data = [];
+        foreach ($this->Options_model->get('options_parent',91) as $key => $value) {
+            $value->options_contents = [ json_decode($value->options_contents) ];
+            $data[] = $value;
+        }
+        return $data;
     }
 
 }

@@ -1,19 +1,20 @@
 <!--================Header Menu Area =================-->
-  <nav class="navbar navbar-default">
-    <div class="container-fluid">
-      <div class="navbar-header">
-        <a class="navbar-brandXXX page-scrollXXX" href="{base_url}">
-          <img src="{base_url}assets/images/website/thumb/{logo}">
-        </a>
-      </div>
-      <ul class="nav navbar-nav pull-right" style="display: inline-flex">
-        <li><a href="{base_url}" target="_blank"><i class="fa fa-phone-square" style="font-size:36px"></i></a></li>
-        <li><a href="{base_url}" target="_blank"><i class="fa fa-instagram" style="font-size:36px"></i></a></li>
-        <li><a href="{base_url}" target="_blank"><i class="fa fa-facebook-official" style="font-size:36px"></i></a></li>
-        <li><a href="{base_url}" target="_blank"><i class="fa fa-twitter" style="font-size:36px"></i></a></li>
-      </ul>
+  <div class="row">
+    <div class="col-sm-6">
+      <a class="float-left" href="{base_url}">
+        <img src="{base_url}assets/images/website/thumb/{logo}">
+      </a>
     </div>
-  </nav>
+    <div class="col-sm-6">
+      <nav class="navbar navbar-expand float-right mt-sm-5">
+        <ul class="navbar-nav">
+          {social_media}
+            <li class="nav-item"><a href="{options_contents}{options_link}{/options_contents}" target="_blank"><img class="w-50" src="<?= base_url('assets/images/image_link/thumb/{options_contents}{options_image}{/options_contents}') ?>" alt="{options_title}" title="{options_title}"></a></li>
+          {/social_media}
+        </ul>
+      </nav>
+    </div>
+  </div>
   
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <!-- <a class="navbar-brand" href="#">Navbar w/ text</a> -->
