@@ -3,8 +3,17 @@
   <footer>
     <div class="container">
       <div class="row">
-        <div class="col-sm-5 topFoot">
-          <p>© <?= date('Y') ?> Prakasita. All rights reserved.</p>
+        <div class="col-sm-12">
+          <p class="text-center">
+            © <?= date('Y') ?> Prakasita. All rights reserved.<br>
+            {statistik}
+              Online : {pengunjung_online}
+              Pengunjung hari ini : {pengunjung_hari_ini}
+              Hits hari ini : {hits_hari_ini}
+              Total Hits : {total_hits}
+              Total Pengunjung : {total_pengunjung}
+            {/statistik}
+          </p>
         </div>
       </div>
     </div>

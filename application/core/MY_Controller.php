@@ -56,8 +56,9 @@ class MY_Controller extends CI_Controller {
         $this->footer['navigation']= $this->nav_menu;
         $this->footer['logo']= $this->logo;
         $this->footer['contact_footer']= $this->Footer_model->contact_footer();
+        $this->footer['statistik']= $this->statistik;
         // echo '<pre>';
-        // print_r($this->navigation);
+        // print_r($this->statistik);
         // echo '</pre>';
 
     }
