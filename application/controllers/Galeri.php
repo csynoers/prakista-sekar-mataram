@@ -70,7 +70,7 @@ class Galeri extends MY_Controller {
 		];
 		$this->render_pages();
 	}
-	public function gallery_video(){
+	public function video(){
 		$this->data['seo'] = $this->Seo_model->seo_website();
 		$this->data['footer'] = $this->Footer_model->data_footer();
 		$this->data['contents']= [

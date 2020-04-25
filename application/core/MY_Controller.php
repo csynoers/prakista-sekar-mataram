@@ -101,8 +101,80 @@ class MY_Controller extends CI_Controller {
 
     public function navs()
     {
-        $this->load->model('Options_model');
-        return json_decode($this->Options_model->get('options_id',189)[0]->options_contents);
+        $this->load->model(['Options_model','Post_model']);
+        $data = json_decode($this->Options_model->get('options_id',189)[0]->options_contents);
+
+        foreach ($data as $key => $value) {
+            switch ($value->pages) {
+                case 'profil':
+                    # code...
+                    $value->href = 'javascript: void(0)';
+                    $value->li_class = 'dropdown';
+                    $value->a_class = 'dropdown-toggle';
+                    $value->a_data_toggle = 'dropdown';
+                    foreach ($this->Post_model->get('post_categories',$value->id) as $keySub => $valueSub) {
+                        $value->rows[$keySub] = (Object) array(
+                            'title' => $valueSub->post_title,
+                            'href' => base_url() . "post/{$value->pages}/{$valueSub->post_seo}",
+                        );
+                    }
+                    break;
+
+                case 'produk':
+                    # code...
+                    $value->href = 'javascript: void(0)';
+                    $value->li_class = 'dropdown';
+                    $value->a_class = 'dropdown-toggle';
+                    $value->a_data_toggle = 'dropdown';
+                    foreach ($this->Options_model->get('options_parent',$value->id) as $keySub => $valueSub) {
+                        $value->rows[$keySub] = (Object) array(
+                            'title' => $valueSub->options_title,
+                            'href' => base_url() . "post/{$value->pages}/{$valueSub->options_seo}",
+                        );
+                    }
+                    break;
+
+                case 'galeri':
+                    # code...
+                    $value->href = 'javascript: void(0)';
+                    $value->li_class = 'dropdown';
+                    $value->a_class = 'dropdown-toggle';
+                    $value->a_data_toggle = 'dropdown';
+
+                    $value->rows = array(
+                        (Object) array(
+                            'title' => 'Foto',
+                            'href' => base_url() . "{$value->pages}/foto",
+                        ),
+                        (Object) array(
+                            'title' => 'Video',
+                            'href' => base_url() . "{$value->pages}/video",
+                        ),
+                    );
+                    break;
+
+                case 'artikel':
+                    # code...
+                    $value->href = base_url() . "post/{$value->pages}";
+                    $value->rows = array();
+                    break;
+                case 'halaman':
+                    # code...
+                    $value->href = base_url() . "{$value->pages}/{$value->id}/?q={$value->title}";
+                    $value->rows = array();
+                    break;
+                
+                default:
+                    # code...
+                    break;
+            }
+            // echo '<pre>';
+            // print_r($value);
+            // echo '</pre>';
+
+        }
+        // die();
+        return $data;
     }
     public function social_media()
     {

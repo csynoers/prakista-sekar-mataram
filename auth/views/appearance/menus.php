@@ -43,9 +43,9 @@
         {navs}
 					<li class="ui-state-default nav-item mt-1 mb-1 p-3 data-nav" data-nav='{json}'>
 						<span class="ui-icon ui-icon-arrowthick-2-n-s"></span>{title}<br>
-						{rows}
+						<!-- {rows}
 							<span class="ml-4">--{title}</span><br>
-						{/rows}
+						{/rows} -->
 					</li>
 				{/navs}
 			</ul>

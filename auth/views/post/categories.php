@@ -8,7 +8,7 @@
   <!-- end Breadcrumbs-->
 
   <!--tambah produk-->
-  <div class="card mb-3">
+  <!-- <div class="card mb-3">
     <div class="card-header text-capitalize">
       <i class="fa fa-plus-square-o"></i> add new categories</div>
     <div class="card-body">
@@ -37,7 +37,7 @@
         <button type="submit" class="btn btn-primary text-capitalize"> Publish</button>
       </form>
     </div>
-  </div>
+  </div> -->
   <hr>
 
   <!-- Daftar Kategori Produk-->
@@ -68,7 +68,7 @@
                 <td>{options_timestamp}</td>
                 <td>
                   <a href="<?php echo base_url() ?>post/edit-categories/{options_id}"><button class="btn btn-info">Edit</button></a>
-                  <a class="{options_delete}" href="<?php echo base_url() ?>post/delete-categories/{options_id}"><button class="btn btn-danger delete">Delete</button></a>
+                  <!-- <a class="{options_delete}" href="<?php echo base_url() ?>post/delete-categories/{options_id}"><button class="btn btn-danger delete">Delete</button></a> -->
                 </td>
               </tr>
             {/categories}

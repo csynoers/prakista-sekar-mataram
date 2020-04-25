@@ -18,74 +18,44 @@ class Appearance extends MY_Controller{
 
     public function menus()
     {
+		$data['navs'] = [];
+
+		/* initialize pages uri static */
+		$category = array(
+			'8' => 'artikel',
+			'165' => 'produk',
+			'168' => 'profil',
+			'page' => 'halaman',
+			'gallery' => 'galeri',
+		);
+
 		$data['categories'] = $this->Post_model->select_categories();
 		foreach ($data['categories'] as $key => $value) {
-			// $this->Post_model->where_parents= ['options_id'=>0];
-			$this->Post_model->where_parents= ['options_parent'=>$value['options_id']];
-			$data['categories'][$key]['rows'] = $this->Post_model->categories_sub();
-		}
-		$data['pages'] = $this->Pages_model->select_pages();
-		
-		// $this->Gallery_model->where= ['options_parent'=>187];
-		// $data['photo_rows']= $this->Gallery_model->edit_photo();
-		// $data['video']= $this->Gallery_model->select_video();
-
-		
-		$data['navs'] = [];
-		foreach ($data['categories'] as $key => $value) {
-			$level_1 = [];
-			foreach ($value['rows'] as $key_level_1 => $value_level_1) {
-				$level_1[] = [
-					'pages' => 'category_level_1',
-					'href' => "category/{$value['options_id']}/{$value_level_1['options_id']}",
-					'title' => $value_level_1['options_title'],
-				];
-			}
+			
 			$nav = [
-				'pages' => 'category',
-				'href' => count($level_1) > 0 ? '#' : "category/{$value['options_id']}",
-				'li_class' => count($level_1) > 0 ? 'dropdown' : NULL ,
-				'a_class' => count($level_1) > 0 ? 'dropdown-toggle' : NULL ,
-				'a_data_toggle' => count($level_1) > 0 ? 'dropdown' : NULL ,
+				'id' => $value['options_id'],
+				'pages' => $category[ $value['options_id'] ],
 				'title' => $value['options_title'],
-				'rows' => $level_1,
 			];
 			$nav['json'] = json_encode($nav);
 			$data['navs'][] = $nav; 
 		}
-
+		
+		$data['pages'] = $this->Pages_model->select_pages();	
 		foreach ($data['pages'] as $key => $value) {
 			$nav = [
-				'pages' => 'page',
-				'href' => "page/{$value['pages_id']}",
-				'li_class' => NULL ,
-				'a_class' => NULL ,
-				'a_data_toggle' => NULL ,
+				'id' => $value['pages_id'],
+				'pages' => $category['page'],
 				'title' => $value['pages_title'],
-				'rows' => [],
 			];
 			$nav['json'] = json_encode($nav);
 			$data['navs'][] = $nav;
 		}
+
 		$nav = [
-			'pages' => 'gallery',
-			'href' => '#',
-			'li_class' => 'dropdown',
-			'a_class' => 'dropdown-toggle',
-			'a_data_toggle' => 'dropdown',
+			'id' => '10',
+			'pages' => $category['gallery'],
 			'title' => 'Galeri',
-			'rows' => [
-				[
-					'pages' => 'gallery',
-					'href' => "gallery/foto",
-					'title' => 'Galeri Foto',
-				],
-				[
-					'pages' => 'gallery',
-					'href' => "gallery/video",
-					'title' => 'Galeri Video',
-				],
-			]
 		];
 		$nav['json'] = json_encode($nav);
 		$data['navs'][] = $nav;

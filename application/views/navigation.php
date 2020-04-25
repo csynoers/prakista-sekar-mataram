@@ -28,11 +28,11 @@
         </li>
         {navs}
           <li class="nav-item {li_class}">
-            <a class="nav-link ml-3 mr-3 font-weight-bold {a_class}" href="<?= base_url('{href}') ?>" data-toggle="{a_data_toggle}">{title}</a>
+            <a class="nav-link ml-3 mr-3 font-weight-bold {a_class}" href="{href}" data-toggle="{a_data_toggle}">{title}</a>
             <!-- Dropdown -->
             <div class="dropdown-menu">
               {rows}
-                <a class="dropdown-item font-weight-bold" href="<?= base_url('{href}') ?>">{title}</a>
+                <a class="dropdown-item font-weight-bold" href="{href}">{title}</a>
               {/rows}
             </div>
           </li>
