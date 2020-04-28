@@ -5,13 +5,24 @@ class Post extends MY_Controller {
 
 	function __construct(){
 		parent::__construct();
-		// $this->load->model('Categories_model');
+		$this->load->model(array(
+            'Options_model',
+            'Post_model',
+        ));
     }
 
     /* profil */
     public function profil()
     {
-        echo "halaman profil";
+        $post_seo = $this->uri->segment(3);
+        $this->contents['options'] = $this->Options_model->get('options_id',168);
+        $this->contents['post'] = $this->Post_model->get('post_seo',$post_seo);
+        $this->header['seo_title']= $this->contents['post'][0]->post_title; 
+        $this->header['seo_description']= str_replace('"', '\'', strip_tags($this->contents['post'][0]->post_contents)); 
+        
+        /* render this page */
+        $this->pages='post/profil';
+        $this->render_pages();
     }
 
     /* produk */

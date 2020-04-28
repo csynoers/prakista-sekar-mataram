@@ -17,6 +17,8 @@ class Post_model extends CI_Model
 
 	public function get($field=NULL,$key=NULL)
 	{
+		$this->db->select("*,IF(post.post_src='','d-none',NULL) AS display_src");
+		
 		if ( $field ) {
 			$this->db->where($field,$key);
 		}
