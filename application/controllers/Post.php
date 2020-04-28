@@ -9,6 +9,7 @@ class Post extends MY_Controller {
             'Options_model',
             'Post_model',
         ));
+        $this->load->helper(['date','text']);
     }
 
     /* profil */
@@ -40,10 +41,31 @@ class Post extends MY_Controller {
     public function artikel()
     {
         if ( $this->uri->segment(3) && ($this->uri->segment(3)=='detail') ) { # call detail post artikel
-            echo "halaman post detail artikel";
+            $this->contents['options'] = $this->Options_model->get('options_id',8);
+            $this->contents['post'] = $this->Post_model->get('post_categories',8);
+            foreach ($this->contents['post'] as $key => $value) {
+                $this->contents['post'][$key]->post_timestamp = tanggal_indo($value->post_timestamp,TRUE);
+            }
+            $this->header['seo_title']= $this->contents['post'][0]->post_title; 
+            $this->header['seo_description']= str_replace('"', '\'', strip_tags($this->contents['post'][0]->post_contents)); 
+            
+            /* render this page */
+            $this->pages='post/artikel_detail';
+            $this->render_pages();
         }
         else { # call post artikel
-            echo "halaman artikel";
+            $this->contents['options'] = $this->Options_model->get('options_id',8);
+            $this->contents['post'] = $this->Post_model->get('post_categories',8);
+            foreach ($this->contents['post'] as $key => $value) {
+                $this->contents['post'][$key]->post_timestamp = tanggal_indo($value->post_timestamp,TRUE);
+                $this->contents['post'][$key]->post_contents = character_limiter(strip_tags($value->post_contents), 300);
+            }
+            $this->header['seo_title']= $this->contents['options'][0]->options_title; 
+            $this->header['seo_description']= str_replace('"', '\'', strip_tags($this->contents['options'][0]->options_contents)); 
+            
+            /* render this page */
+            $this->pages='post/artikel';
+            $this->render_pages();
         }
     }
 }
