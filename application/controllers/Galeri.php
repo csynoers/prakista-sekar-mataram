@@ -71,15 +71,16 @@ class Galeri extends MY_Controller {
 		$this->render_pages();
 	}
 	public function video(){
-		$this->data['seo'] = $this->Seo_model->seo_website();
-		$this->data['footer'] = $this->Footer_model->data_footer();
-		$this->data['contents']= [
-			'video'=>$this->data_mp($this->Gallery_model->select_gallery(['options_id'=>14]),'detail-photo')];
+		$this->contents['options'] = $this->Options_model->get('options_parent',14);
 
-		$this->parser->parse('header',$this->data['seo']);
-		$this->parser->parse('navigation',[]);
-		$this->parser->parse('gallery/video',$this->data['contents']);
-		$this->parser->parse('footer',$this->data['footer']);
+		/* mod $this->contents['options'] */
+		$this->load->helper('date');
+		foreach ($this->contents['options'] as $key => $value) {
+			$this->contents['options'][$key]->options_timestamp = tanggal_indo($value->options_timestamp,TRUE);
+		}
 
+		/* render this page */
+		$this->pages='galeri/video';
+		$this->render_pages();
 	}
 }
