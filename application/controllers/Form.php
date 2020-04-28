@@ -134,8 +134,8 @@ class Form extends CI_Controller {
 		$this->post['contents']['email'] = strip_tags($this->input->post('email'));
 		$this->post['contents']['no_telp'] = strip_tags($this->input->post('no_telp'));
 		$this->post['contents']['contents'] = strip_tags($this->input->post('contents'));
-		$this->post['contents']['tahu_kami_dari'] = strip_tags($this->input->post('tahu_kami_dari'));
-		$this->post['contents']['pendapat_tentang_kami'] = strip_tags($this->input->post('pendapat_tentang_kami'));
+		// $this->post['contents']['tahu_kami_dari'] = strip_tags($this->input->post('tahu_kami_dari'));
+		// $this->post['contents']['pendapat_tentang_kami'] = strip_tags($this->input->post('pendapat_tentang_kami'));
 		$this->post['form_parent'] = 1;
 
 		$this->data['insert'] = [
@@ -144,8 +144,17 @@ class Form extends CI_Controller {
 			'form_parent' => $this->post['form_parent'],
 		];
 
+		# flashdata
+		$message = array(
+			'alert' => 'alert-success',
+			'msg' => 'Data berhasil disimpan'
+		);
+
+		$this->session->set_flashdata('msg', $message);
+
+		// die();
 		$this->Form_model->insert_form($this->data['insert']);
-		redirect(base_url( "pages/kontak/?p=1&mail=".$this->post['contents']['email'] ));
+		redirect(base_url( $this->input->post('page') ));
 
 		// echo "<pre>";
 		// print_r($this->post);

@@ -50,18 +50,21 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |		my-controller/my-method	-> my_controller/my_method
 */
 $route['default_controller'] = 'home';
-$route['category/(:any)'] = 'category/index';
-$route['aksi-daftar'] = 'form/aksi_daftar';
+
+$route['halaman/(:any)'] = 'halaman/index';
 $route['contact-send'] = 'form/contact_send';
-$route['json/(:any)'] = 'json/index';
-$route['tentang-kami/(:any)'] = 'tentang_kami/index';
-$route['categories/article'] = 'categories/index';
-$route['categories/testimoni'] = 'categories/index';
-$route['categories/detail'] = 'categories/detail';
-$route['pages/(:any)'] = 'pages/index';
-$route['berita/page/(:any)'] = 'berita/index/page';
-$route['galeri/foto/(:any)'] = 'galeri/foto';
-$route['dokumen'] = 'hukum';
+
+// $route['category/(:any)'] = 'category/index';
+// $route['aksi-daftar'] = 'form/aksi_daftar';
+// $route['json/(:any)'] = 'json/index';
+// $route['tentang-kami/(:any)'] = 'tentang_kami/index';
+// $route['categories/article'] = 'categories/index';
+// $route['categories/testimoni'] = 'categories/index';
+// $route['categories/detail'] = 'categories/detail';
+// $route['berita/page/(:any)'] = 'berita/index/page';
+// $route['galeri/foto/(:any)'] = 'galeri/foto';
+// $route['dokumen'] = 'hukum';
+
 $route['404_override'] = '';
 
 // $route['login/(.+)'] = 'auth/login/$1';

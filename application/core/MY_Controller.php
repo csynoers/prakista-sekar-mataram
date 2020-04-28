@@ -8,27 +8,34 @@ class MY_Controller extends CI_Controller {
 	public $pages= 'welcome_message';
 	public $header = [];
 	public $navigation = [];
-    public $sidebar= [];
+    // public $sidebar= [];
 	public $contents= [];
 	public $footer= [];
-    public $form_embed;
+    // public $form_embed;
 
     public function __construct()
     {
         parent::__construct();
         /*load all modal contructor*/
-        $this->load->model( ['Header_model','Navigation_model','Sidebar_left_model','Statistik_model','Footer_model'] );
+        $this->load->model( array(
+            'Header_model',
+            'Navigation_model',
+            // 'Sidebar_left_model',
+            'Statistik_model',
+            // 'Footer_model'
+        ) );
+
         /*object construct*/
         $this->url = base_url();
-        $this->nav_menu = [
-            ['link'=> base_url(), 'title'=>'Home'],
-            ['link'=> base_url().'pages/layanan', 'title'=>'Layanan'],
-            ['link'=> base_url().'pages/info', 'title'=>'Info'],
-            ['link'=> base_url().'galeri/foto', 'title'=>'Galeri'],
-            ['link'=> base_url().'categories/artikel', 'title'=>'Artikel'],
-            ['link'=> base_url().'pages/profil', 'title'=>'Profil'],
-            ['link'=> base_url().'pages/kontak', 'title'=>'Kontak'],
-        ];
+        // $this->nav_menu = [
+        //     ['link'=> base_url(), 'title'=>'Home'],
+        //     ['link'=> base_url().'pages/layanan', 'title'=>'Layanan'],
+        //     ['link'=> base_url().'pages/info', 'title'=>'Info'],
+        //     ['link'=> base_url().'galeri/foto', 'title'=>'Galeri'],
+        //     ['link'=> base_url().'categories/artikel', 'title'=>'Artikel'],
+        //     ['link'=> base_url().'pages/profil', 'title'=>'Profil'],
+        //     ['link'=> base_url().'pages/kontak', 'title'=>'Kontak'],
+        // ];
         $this->logo = $this->Navigation_model->logo();
 
 
@@ -42,20 +49,20 @@ class MY_Controller extends CI_Controller {
         $this->navigation['logo']= $this->logo;
         $this->navigation['social_media']= $this->social_media();
         $this->navigation['navs']= $this->navs();
-        $this->sidebar['base_url']= $this->url;
-        $this->sidebar['sidebar_left_informasi']= $this->Sidebar_left_model->sidebar_left_informasi();
-        $this->sidebar['sidebar_left_partner']= $this->Sidebar_left_model->image_link(90);
-        $this->sidebar['sidebar_left_sosmed']= $this->Sidebar_left_model->image_link(91);
-        $this->sidebar['sidebar_left_statistik']= $this->statistik;
+        // $this->sidebar['base_url']= $this->url;
+        // $this->sidebar['sidebar_left_informasi']= $this->Sidebar_left_model->sidebar_left_informasi();
+        // $this->sidebar['sidebar_left_partner']= $this->Sidebar_left_model->image_link(90);
+        // $this->sidebar['sidebar_left_sosmed']= $this->Sidebar_left_model->image_link(91);
+        // $this->sidebar['sidebar_left_statistik']= $this->statistik;
         $this->contents['base_url']= $this->url;
-        $this->contents['sidebar_left_statistik']= $this->statistik;
-        $this->contents['sidebar_left_informasi']= $this->Sidebar_left_model->sidebar_left_informasi();
-        $this->contents['sidebar_left_partner']= $this->Sidebar_left_model->image_link(90);
-        $this->contents['sidebar_left_sosmed']= $this->Sidebar_left_model->image_link(91);
+        // $this->contents['sidebar_left_statistik']= $this->statistik;
+        // $this->contents['sidebar_left_informasi']= $this->Sidebar_left_model->sidebar_left_informasi();
+        // $this->contents['sidebar_left_partner']= $this->Sidebar_left_model->image_link(90);
+        // $this->contents['sidebar_left_sosmed']= $this->Sidebar_left_model->image_link(91);
         $this->footer['base_url']= $this->url;
-        $this->footer['navigation']= $this->nav_menu;
-        $this->footer['logo']= $this->logo;
-        $this->footer['contact_footer']= $this->Footer_model->contact_footer();
+        // $this->footer['navigation']= $this->nav_menu;
+        // $this->footer['logo']= $this->logo;
+        // $this->footer['contact_footer']= $this->Footer_model->contact_footer();
         $this->footer['statistik']= $this->statistik;
         // echo '<pre>';
         // print_r($this->statistik);
@@ -88,20 +95,15 @@ class MY_Controller extends CI_Controller {
     {
         $this->navigation['service'] = $this->Navigation_model->nav_service();
         $this->parser->parse( 'header', $this->header );
-            $this->parser->parse( 'navigation', $this->navigation );
-            $this->right_content= $this->parser->parse( $this->pages, $this->contents );
-            if ( !empty($this->form_embed) ) {
-                $this->parser->parse( 'pages/form_contact', [] );
-            }        
+        $this->parser->parse( 'navigation', $this->navigation );
+        $this->parser->parse( $this->pages, $this->contents );       
         $this->parser->parse( 'footer', $this->footer );
-        // echo "<pre>";
-        // print_r($this->pages);
-        // echo "</pre>";
     }
 
     public function navs()
     {
         $this->load->model(['Options_model','Post_model']);
+        $this->load->helper('string');
         $data = json_decode($this->Options_model->get('options_id',189)[0]->options_contents);
 
         foreach ($data as $key => $value) {
@@ -160,7 +162,7 @@ class MY_Controller extends CI_Controller {
                     break;
                 case 'halaman':
                     # code...
-                    $value->href = base_url() . "{$value->pages}/{$value->id}/?q={$value->title}";
+                    $value->href = base_url() . "{$value->pages}/".seo_title($value->title);
                     $value->rows = array();
                     break;
                 
