@@ -57,8 +57,20 @@ class Galeri extends MY_Controller {
 	}
 	public function foto()
 	{
-		$this->pages= 'galeri/foto';
-		$this->contents= ['foto'=>$this->data_mp($this->Gallery_model->select_gallery(['options_parent'=>13]),'photo')];
+		$this->contents['options'] = $this->Options_model->get('options_parent',187);
+
+		/* mod $this->contents['options'] */
+		$this->load->helper('date');
+		foreach ($this->contents['options'] as $key => $value) {
+			$this->contents['options'][$key]->options_timestamp = tanggal_indo($value->options_timestamp,TRUE);
+			$this->contents['options'][$key]->image_src = $value->options_contents;
+		}
+		// echo '<pre>';
+		// print_r($this->contents['options']);
+		// echo '</pre>';
+		// die();
+		/* render this page */
+		$this->pages='galeri/foto';
 		$this->render_pages();
 	}
 	public function detail_foto(){

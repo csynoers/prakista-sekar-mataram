@@ -5,9 +5,10 @@
       <a href="<?php echo base_url()?>admin">Dashboard</a>
     </li>
     <li class="breadcrumb-item">Galeri</li>
-    <li class="breadcrumb-item"><a href="<?php echo base_url()?>gallery/photo">Photo</a></li>
-    <li class="breadcrumb-item">Edit</li>
-    <li class="breadcrumb-item active">{edit_photo_album}{options_title}{/edit_photo_album}</li>
+    <li class="breadcrumb-item active">Photo</li>
+    <!-- <li class="breadcrumb-item"><a href="<?php echo base_url()?>gallery/photo">Photo</a></li> -->
+    <!-- <li class="breadcrumb-item">Edit</li> -->
+    <!-- <li class="breadcrumb-item active">{edit_photo_album}{options_title}{/edit_photo_album}</li> -->
   </ol>
   <!-- end Breadcrumbs-->
 
@@ -20,9 +21,9 @@
               <input type="hidden" name="id" value="{edit_photo_album}{options_id}{/edit_photo_album}">
               <div class="form-group">
                 <div class="form-row">
-                  <div class="col-md-6">
+                  <div class="col-md-6 d-none">
                     <label for="exampleInputName">Title</label>
-                    <input class="form-control" id="exampleInputName" type="text" aria-describedby="nameHelp" placeholder="Enter name" name="title" required="" value="{edit_photo_album}{options_title}{/edit_photo_album}">
+                    <input class="form-control" id="exampleInputName" type="hidden" aria-describedby="nameHelp" placeholder="Enter name" name="title" required="" value="{edit_photo_album}{options_title}{/edit_photo_album}">
                   </div>
                 </div>
               </div>
@@ -77,7 +78,7 @@
         {photo_rows}
         <div class="col-md-3">
           <img class="img-responsive img-thumbnail gallery-foto" src="          <?php echo base_url(); ?>../assets/images/photo/256/{options_contents}" alt="" >
-          <p><input type="checkbox" class="checkthumb" name="checkthumb" value="{options_id}" > {options_contents} </p>
+          <p><input type="checkbox" class="checkthumb" name="checkthumb" value="{options_id}" > {options_title} </p>
         </div>
         {/photo_rows}
     </div>

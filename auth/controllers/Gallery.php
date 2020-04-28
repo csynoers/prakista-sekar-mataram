@@ -180,6 +180,7 @@ class Gallery extends MY_Controller{
 
 					$this->load->helper('string');
 					$this->Gallery_model->post= [
+						'options_title' 	=> pathinfo($_FILES['fupload']['name'][$key])['filename'],
 						'options_contents' 	=> $image['file_name'],
 						'options_parent' 	=> $this->input->post('id'),
 					];
