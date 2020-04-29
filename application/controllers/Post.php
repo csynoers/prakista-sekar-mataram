@@ -30,10 +30,46 @@ class Post extends MY_Controller {
     public function produk()
     {
         if ( $this->uri->segment(4) && ($this->uri->segment(4)=='detail') ) { # call detail post produk
-            echo "halaman post detail produk";
+            $options_seo_produk = $this->uri->segment(2);
+            $options_seo_kategori = $this->uri->segment(3);
+
+            $this->contents['kategori'] = $this->Options_model->get('options_seo',$options_seo_kategori);
+            foreach ($this->contents['kategori'] as $key => $value) {
+                $this->contents['kategori'][$key]->href = base_url('post/' .$options_seo_produk .'/' .$value->options_seo);
+            }
+            $this->contents['produk'] = $this->Options_model->get('options_seo',$options_seo_produk);
+            
+            $post_categories = $this->contents['kategori'][0]->options_id;
+            $this->contents['post'] = $this->Post_model->get('post_categories',$post_categories);
+            foreach ($this->contents['post'] as $key => $value) {
+                $this->contents['post'][$key]->post_timestamp = tanggal_indo($value->post_timestamp,TRUE);
+            }
+            $this->header['seo_title']= $this->contents['post'][0]->post_title; 
+            $this->header['seo_description']= str_replace('"', '\'', strip_tags($this->contents['post'][0]->post_contents)); 
+            
+            /* render this page */
+            $this->pages='post/produk_detail';
+            $this->render_pages();
         }
         else { # call post produk by kategori
-            echo "halaman post produk by kategori";
+            $options_seo_kategori = $this->uri->segment(3);
+            $this->contents['kategori'] = $this->Options_model->get('options_seo',$options_seo_kategori);
+            $options_seo_produk = $this->uri->segment(2);
+            $this->contents['produk'] = $this->Options_model->get('options_seo',$options_seo_produk);
+
+            $this->contents['post'] = $this->Post_model->get('post_categories',$this->contents['kategori'][0]->options_id);
+            
+            foreach ($this->contents['post'] as $key => $value) {
+                $this->contents['post'][$key]->post_timestamp = tanggal_indo($value->post_timestamp,TRUE);
+                $this->contents['post'][$key]->post_contents = character_limiter(strip_tags($value->post_contents), 300);
+                $this->contents['post'][$key]->kategori = $options_seo_kategori;
+            }
+            $this->header['seo_title']= $this->contents['kategori'][0]->options_title; 
+            $this->header['seo_description']= str_replace('"', '\'', strip_tags($this->contents['kategori'][0]->options_contents)); 
+            
+            /* render this page */
+            $this->pages='post/produk_kategori';
+            $this->render_pages();
         }
     }
 
