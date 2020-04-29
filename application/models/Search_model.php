@@ -38,6 +38,7 @@ class Search_model extends CI_Model
 						"post_id"=> $value->post_id,
 						"post_title"=> $value->post_title,
 						"post_contents"=> $value->post_contents,
+						"display_src"=> $value->display_src,
 						"post_src"=> base_url().'assets/images/post/'.$value->post_src.'?v='.$value->post_timestamp,
 						"post_timestamp"=> tanggal_indo($value->post_timestamp,TRUE),
 						"options_title"=> $value->options_title,
@@ -68,7 +69,7 @@ class Search_model extends CI_Model
 	}
 	public function search_detail()
 	{
-		$this->db->select('post.post_id,post.post_title,post.post_contents,post.post_src,post.post_timestamp,options.options_title,options.options_seo');
+		$this->db->select("post.post_id,post.post_title,post.post_contents,post.post_src,post.post_timestamp,options.options_title,options.options_seo,IF(post.post_src='','d-none',NULL) AS display_src");
 		$this->db->order_by('post.post_timestamp', 'DESC');
 		$this->db->join('options', 'options.options_id = post.post_categories','left');
 		$this->db->where('post.post_id',$this->post_id);

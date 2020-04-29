@@ -1,27 +1,18 @@
-<div class="boxContent topPage">
-  <div class="container">
-    <div class="row">
-      <div class="col-sm-12">
-        <div class="hotTitle">
-          <h1>Detail Artikel yo-<span class="text-muted">bersih</span></h1>
-        </div>
-      </div>
-      {contents}
-      <div class="col-sm-12">
-        <div class="form boxOne">
-          <h2 class="ml-3 mt-3 text-capitalize">{post_title}</h2>
-          <h6 class="ml-3 text-info"><small>Published : {post_timestamp}</small></h6>
-          <hr>
-          <img style="width: 96%; margin-bottom: 15px" src="{post_src}" alt="">
-          <div class="car-body" >
-            <div style="padding: 15px ;" class="card-text text-justify m-3">
-              <p>{post_contents}</p>
+<div id="contentWrapper" class="container-fluidXXX">
+    <nav class="mt-3" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{base_url}">Home</a></li>
+            <li class="breadcrumb-item">Search</li>
+            <li class="breadcrumb-item active" aria-current="page">Detail</li>
+        </ol>
+    </nav>
+    {contents}
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">{post_title} <br><small><i class="material-icons">date_range</i><i>{post_timestamp}</i></small></h4>
+                <img class="card-img-top img-fluidXXX {display_src}" src="{post_src}" alt="Card image">
+                <p class="card-text text-justify">{post_contents}</p>
             </div>
-          </div>
-          
         </div>
-      </div>
-      {/contents}   
-    </div>
-  </div>
+    {/contents}
 </div>

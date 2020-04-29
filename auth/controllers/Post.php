@@ -98,7 +98,7 @@ class Post extends MY_Controller{
 			];
 
 			# send data to model
-			$this->Post_model->post = $data;
+			$this->Post_model->post = $post;
 
 			$this->Post_model->where= ['post_id'=>$this->input->post('id')];
 

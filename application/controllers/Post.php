@@ -81,7 +81,8 @@ class Post extends MY_Controller {
     {
         if ( $this->uri->segment(3) && ($this->uri->segment(3)=='detail') ) { # call detail post artikel
             $this->contents['options'] = $this->Options_model->get('options_id',8);
-            $this->contents['post'] = $this->Post_model->get('post_categories',8);
+            $post_id = $this->uri->segment(5);
+            $this->contents['post'] = $this->Post_model->get('post_id',$post_id);
             foreach ($this->contents['post'] as $key => $value) {
                 $this->contents['post'][$key]->post_timestamp = tanggal_indo($value->post_timestamp,TRUE);
             }

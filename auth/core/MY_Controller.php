@@ -98,9 +98,9 @@ class MY_Controller extends CI_Controller {
 						<li>
 							<a href="'.base_url('form/contact-send').'" class="'.( ($this->uri->segment(1)=='form' && $this->uri->segment(2)=='contact-send' ) || ($this->uri->segment(1)=='form' && $this->uri->segment(2)=='view-contact-send' ) ? 'bg-secondary' : NULL).'">kotak masuk</a>
 						</li>
-						<li>
+						<!--<li>
 							<a href="'.base_url('support/contact-footer').'" class="'.( ($this->uri->segment(1)=='support' && $this->uri->segment(2)=='contact-footer' ) ? 'bg-secondary' : NULL).'">Footer</a>
-						</li>
+						</li>-->
 						<!-- <li>
 							<a href="{base_url}support/video-footer">Video Footer</a>
 						</li> -->
@@ -142,9 +142,9 @@ class MY_Controller extends CI_Controller {
 						<li>
 							<a href="'.base_url('appearance/menus').'" class="'.( ($this->uri->segment(1)=='appearance' ) && ($this->uri->segment(2)=='menus' ) ? 'bg-secondary' : NULL).'">Menus</a>
 						</li>
-						<li>
+						<!--<li>
 							<a href="{base_url}hukum">Background</a>
-						</li>
+						</li>-->
 					</ul>
 				</li>
 				<!--

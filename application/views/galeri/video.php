@@ -6,15 +6,17 @@
             <li class="breadcrumb-item active" aria-current="page">Video</li>
         </ol>
     </nav>
-	<div class="rowX">
-		{options}
-			<div class="card col-sm-3">
-				<iframe class="card-img-top mt-3" src="{options_contents}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-				<div class="border border-info card-body mb-3">
-					<h5 class="card-title text-capitalize">{options_title}</h5>
-					<p class="card-text"><i class="material-icons" style="font-size:14px">&#xe916;</i> {options_timestamp}</p>
+	<div class="container-fluid">
+		<div class="row">
+			{options}
+				<div class="card col-sm-3">
+					<iframe class="card-img-top mt-3" src="{options_contents}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+					<div class="border border-info card-body mb-3">
+						<h5 class="card-title text-capitalize">{options_title}</h5>
+						<p class="card-text"><i class="material-icons" style="font-size:14px">&#xe916;</i> {options_timestamp}</p>
+					</div>
 				</div>
-			</div>
-		{/options}
+			{/options}
+		</div>
 	</div>
 </div>

@@ -23,12 +23,12 @@ class Search extends MY_Controller {
 		}else{
 			$this->pages= 'search/search';
 			// $this->Search_model->categories_seo= 'artikel';
-			$this->Search_model->match= $this->input->get('c');
-			$this->contents['result_search']= count($this->Search_model->search()) > 0 ? '('.count($this->Search_model->search()).') search: '.$this->input->get('c') : $this->input->get('c').' tidak ditemukan'; 
+			$this->Search_model->match= $this->input->get('search');
+			$this->contents['result_search']= count($this->Search_model->search()) > 0 ? '('.count($this->Search_model->search()).') search: '.$this->input->get('search') : $this->input->get('search').' tidak ditemukan'; 
 			$this->contents['contents']= $this->Search_model->search(); 
 			// $this->render_pages();
 		}
-			$this->render_pages();						
+		$this->render_pages();						
 		// echo "<pre>";
 		// print_r($this->contents);
 		// echo "</pre>";
