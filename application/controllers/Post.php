@@ -64,6 +64,9 @@ class Post extends MY_Controller {
                 $this->contents['post'][$key]->post_contents = character_limiter(strip_tags($value->post_contents), 300);
                 $this->contents['post'][$key]->kategori = $options_seo_kategori;
             }
+
+            $this->rows_is_empty($this->contents['post']);
+
             $this->header['seo_title']= $this->contents['kategori'][0]->options_title; 
             $this->header['seo_description']= str_replace('"', '\'', strip_tags($this->contents['kategori'][0]->options_contents)); 
             
@@ -102,6 +105,21 @@ class Post extends MY_Controller {
             /* render this page */
             $this->pages='post/artikel';
             $this->render_pages();
+        }
+    }
+
+    protected function rows_is_empty( $rows )
+    {
+        /* set default */
+        $this->contents['message'] = NULL;
+        if ( count($rows) < 1 ) {
+            $this->contents['message'] = '
+                <div class="alert alert-dismissible alert-warning fade in p-5 text-center show">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true" style="font-size:20px">×</span>
+                    </button>    <strong>Warning!</strong> Maaf data halaman ini belum tersedia.
+                </div>
+            ';
         }
     }
 }

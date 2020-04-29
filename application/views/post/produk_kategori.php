@@ -10,6 +10,7 @@
             {/kategori}
         </ol>
     </nav>
+    {message}
     {post}
         <div class="media border p-3">
             <div class="row">
