@@ -76,9 +76,9 @@ class import_db
 // config import
 $import = new import_db([
     'host'=> 'localhost',
-    'user'=> 'root',
-    'pass'=> '',
-    'dbname'=> 'prakista',
+    'user'=> 'jogjaval_5c3',
+    'pass'=> '3.s.0.c.9.m.7',
+    'dbname'=> 'jogjaval_5c3_prakasita',
     'sqldump'=> 'sql_dump/prakista.sql', 
 ]);
 
