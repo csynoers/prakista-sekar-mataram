@@ -79,7 +79,7 @@ $import = new import_db([
     'user'=> 'root',
     'pass'=> '',
     'dbname'=> 'prakista',
-    'sqldump'=> 'sql_dump/yobersih_5c3_yobersih.sql', 
+    'sqldump'=> 'sql_dump/prakista.sql', 
 ]);
 
 echo "<pre>";
