@@ -99,6 +99,7 @@ class Post extends MY_Controller {
                 $this->contents['post'][$key]->post_timestamp = tanggal_indo($value->post_timestamp,TRUE);
                 $this->contents['post'][$key]->post_contents = character_limiter(strip_tags($value->post_contents), 300);
             }
+            $this->rows_is_empty($this->contents['post']);
             $this->header['seo_title']= $this->contents['options'][0]->options_title; 
             $this->header['seo_description']= str_replace('"', '\'', strip_tags($this->contents['options'][0]->options_contents)); 
             
