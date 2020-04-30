@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col-sm-6">
       <a class="float-left" href="{base_url}">
-        <img src="{base_url}assets/images/website/thumb/{logo}">
+        <img class="img-fluid" src="{base_url}assets/images/website/thumb/{logo}">
       </a>
     </div>
     <div class="col-sm-6">
@@ -16,7 +16,7 @@
     </div>
   </div>
   
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <nav id="navPrimary" class="navbar navbar-expand-lg navbar-dark bg-dark">
     <!-- <a class="navbar-brand" href="#">Navbar w/ text</a> -->
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
