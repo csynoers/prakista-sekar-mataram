@@ -18,7 +18,8 @@
     <li class="breadcrumb-item">
       <a href="{base_url}admin">Dashboard</a>
     </li>
-    <li class="breadcrumb-item text-capitalize active">Appearance Menus</li>
+    <li class="breadcrumb-item text-capitalize">Appearance</li>
+    <li class="breadcrumb-item text-capitalize active">Menus</li>
   </ol>
   <!-- end Breadcrumbs-->
 

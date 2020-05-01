@@ -25,5 +25,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 </head>
 
 <body>
-  <div id="wrapAll" class="card m-3">
+  <div id="wrapAll" class="card m-3" style="background-image:url('{background}');">
+  <!-- <div id="wrapAll" class="card m-3" style="background-image:url('{background}');background-size: cover;background-position: center;"> -->
     <div class="card-body">

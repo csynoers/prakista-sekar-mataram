@@ -22,6 +22,7 @@ class MY_Controller extends CI_Controller {
             'Navigation_model',
             // 'Sidebar_left_model',
             'Statistik_model',
+            'Options_model',
             // 'Footer_model'
         ) );
 
@@ -45,6 +46,7 @@ class MY_Controller extends CI_Controller {
         $this->header['seo_title']= $this->Header_model->seo_title();
         $this->header['seo_keyword']= $this->Header_model->seo_keyword();
         $this->header['seo_description']= $this->Header_model->seo_description();
+        $this->header['background']= $this->get_background();
         $this->navigation['base_url']= $this->url;
         $this->navigation['logo']= $this->logo;
         $this->navigation['social_media']= $this->social_media();
@@ -102,7 +104,7 @@ class MY_Controller extends CI_Controller {
 
     public function navs()
     {
-        $this->load->model(['Options_model','Post_model']);
+        $this->load->model(['Post_model']);
         $this->load->helper('string');
         $data = json_decode($this->Options_model->get('options_id',189)[0]->options_contents);
 
@@ -180,13 +182,20 @@ class MY_Controller extends CI_Controller {
     }
     public function social_media()
     {
-        $this->load->model('Options_model');
         $data = [];
         foreach ($this->Options_model->get('options_parent',91) as $key => $value) {
             $value->options_contents = [ json_decode($value->options_contents) ];
             $data[] = $value;
         }
         return $data;
+    }
+    public function get_background()
+    {
+        $data= $this->Options_model->get('options_id',76);
+        foreach ($data as $key => $value) {
+            $data[$key]->options_image = json_decode($value->options_contents)->options_image;
+        }
+        return base_url("assets/images/website/{$data[0]->options_image}");
     }
 
 }

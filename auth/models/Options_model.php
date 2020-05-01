@@ -9,6 +9,15 @@
         protected $options_parent ;
         protected $options_timestamp ;
 
+        public function get($field=NULL,$key=NULL)
+        {
+            if ( $field ) {
+                $this->db->where($field,$key);
+            }
+
+            return $this->db->get( $this->table )->result_object();
+        }
+        
         public function store($id=NULL)
         {
             if ( $id ) { # update

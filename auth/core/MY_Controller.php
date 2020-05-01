@@ -142,9 +142,9 @@ class MY_Controller extends CI_Controller {
 						<li>
 							<a href="'.base_url('appearance/menus').'" class="'.( ($this->uri->segment(1)=='appearance' ) && ($this->uri->segment(2)=='menus' ) ? 'bg-secondary' : NULL).'">Menus</a>
 						</li>
-						<!--<li>
-							<a href="{base_url}hukum">Background</a>
-						</li>-->
+						<li>
+							<a href="'.base_url('appearance/background').'" class="'.( ($this->uri->segment(1)=='appearance' ) && ($this->uri->segment(2)=='background' ) ? 'bg-secondary' : NULL).'">Background</a>
+						</li>
 					</ul>
 				</li>
 				<!--

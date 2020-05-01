@@ -88,4 +88,84 @@ class Appearance extends MY_Controller{
 			echo 'FALSE';
 		}
 	}
+
+	public function background()
+    {	
+		if ( $this->uri->segment(3) ) {
+			$config['upload_path']= '../assets/images/website';
+			$config['allowed_types']= 'gif|jpg|png';
+			$this->load->library('upload', $config);
+			if ( ! $this->upload->do_upload('fupload'))
+			{
+				$this->pages= 'appearance/background';
+				$this->contents['options']= $this->Options_model->get('options_id',76);
+				foreach ($this->contents['options'] as $key => $value) {
+					$this->contents['options'][$key]->options_image = json_decode($value->options_contents)->options_image;
+				}
+				# flashdata
+				$message = array(
+					'alert' => 'alert-warning',
+					'msg' => $this->upload->display_errors(),
+				);
+	
+				$this->session->set_flashdata('msg', $message);
+				$this->render_pages();
+			}
+			else{
+				$fileData = $this->upload->data();
+				// image resize
+				$this->load->library('image_lib');
+				$config['image_library']= 'gd2';
+				$config['source_image']= $fileData['full_path'];
+				$config['new_image']= '../assets/images/website/thumb/'.$fileData['file_name'];
+				$config['create_thumb']= FALSE;
+				$config['maintain_ratio']= TRUE;
+				$config['height']= 200;
+	
+				$this->image_lib->clear();
+				$this->image_lib->initialize($config);
+				$this->image_lib->resize();
+				// end image resize
+	
+				$this->rows= $this->Options_model->get('options_id',76);
+				foreach ($this->rows as $key => $value) {
+					$this->rows[$key]->options_image = json_decode($value->options_contents)->options_image;
+				}
+
+				if ( file_exists('../assets/images/website/'.$this->rows[0]->options_image) ) {
+					unlink('../assets/images/website/'.$this->rows[0]->options_image);
+					if ( file_exists('../assets/images/website/thumb/'.$this->rows[0]->options_image) ) {
+						unlink('../assets/images/website/thumb/'.$this->rows[0]->options_image);
+					}
+				}
+	
+				$this->Options_model->post= ['options_contents'=>json_encode(['options_image'=> $fileData['file_name'] ])];
+	
+				if ( $this->Options_model->store(76) ) {
+					# flashdata
+					$message = array(
+						'alert' => 'alert-success',
+						'msg' => 'Data berhasil diubah',
+					);
+	
+					$this->session->set_flashdata('msg', $message);
+					redirect(base_url('appearance/background'));
+				}
+			}
+		}
+		
+		else {
+			$this->pages = 'appearance/background';
+			// $this->contents['base_url']= base_url();
+			$this->contents['options']= $this->Options_model->get('options_id',76);
+			foreach ($this->contents['options'] as $key => $value) {
+				$this->contents['options'][$key]->options_image = json_decode($value->options_contents)->options_image;
+			}
+			// echo '<pre>';
+			// print_r($this->contents['options']);
+			// echo '</pre>';
+			// die();
+			$this->render_pages();
+		}
+	}
 }

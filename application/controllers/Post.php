@@ -39,8 +39,8 @@ class Post extends MY_Controller {
             }
             $this->contents['produk'] = $this->Options_model->get('options_seo',$options_seo_produk);
             
-            $post_categories = $this->contents['kategori'][0]->options_id;
-            $this->contents['post'] = $this->Post_model->get('post_categories',$post_categories);
+            $post_id = $this->uri->segment(6);
+            $this->contents['post'] = $this->Post_model->get('post_id',$post_id);
             foreach ($this->contents['post'] as $key => $value) {
                 $this->contents['post'][$key]->post_timestamp = tanggal_indo($value->post_timestamp,TRUE);
             }
