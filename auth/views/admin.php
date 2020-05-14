@@ -1,4 +1,4 @@
-    <div class="container-fluid">
+<div class="container-fluid">
       <!-- Breadcrumbs-->
       <ol class="breadcrumb">
         <li class="breadcrumb-item">
@@ -81,6 +81,11 @@
         </div> -->
       </div>
       <!-- end Icon Cards-->
+      
+        <div class="jumbotron">
+            <h1>Panduan Website</h1>
+            <p><a class="btn btn-link" href="<?= base_url('admin/panduan-web') ?>">Klik disini untuk mengunduh</a></p>
+        </div>
 
       <!-- Area Chart Example-->
       <!-- <div class="card mb-3">

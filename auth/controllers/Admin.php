@@ -21,4 +21,21 @@ class Admin extends MY_Controller{
 		$this->pages = 'admin';
 		$this->render_pages();
 	}
+
+	public function panduan_web()
+	{
+		$this->load->helper('download');
+
+		force_download('../assets/pdf/prakasitasekarmataram.id.pdf',NULL);
+
+		# flashdata
+		// $message = array(
+		// 	'alert' => 'alert-info',
+		// 	'msg' => 'jika tidak ada proses download silahkan menghubungi jogjasite.com kembali, Terimakasih'
+		// );
+
+		// $this->session->set_flashdata('msg', $message);
+		// redirect(base_url("admin"));
+		echo "<script>window.alert('jika tidak ada proses download silahkan menghubungi jogjasite.com kembali, Terimakasih');window.location.href='".base_url('admin')."';</script>";
+	}
 }
