@@ -1,23 +1,8 @@
-<!--================Header Menu Area =================-->
-<div class="row">
-    <div class="col-sm-6">
-      <a class="float-left" href="{base_url}">
-        <img class="img-fluid" src="{base_url}assets/images/website/thumb/{logo}">
-      </a>
-    </div>
-    <div class="col-sm-6">
-      <nav class="navbar navbar-expand float-right mt-sm-5">
-        <ul class="navbar-nav">
-          {social_media}
-            <li class="nav-item"><a href="{options_contents}{options_link}{/options_contents}" target="_blank"><img class="w-50" src="<?= base_url('assets/images/image_link/thumb/{options_contents}{options_image}{/options_contents}') ?>" alt="{options_title}" title="{options_title}"></a></li>
-          {/social_media}
-        </ul>
-      </nav>
-    </div>
-  </div>
-  
+<!--================Header Menu Area =================-->  
   <nav id="navPrimary" class="navbar navbar-expand-lg navbar-dark" style="border-radius:6px;background-color: #144c3d94;">
-    <!-- <a class="navbar-brand" href="#">Navbar w/ text</a> -->
+    <a class="navbar-brand" href="{base_url}">
+      <img class="img-fluid" src="{base_url}assets/images/website/thumb/{logo}">
+    </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
