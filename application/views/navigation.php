@@ -1,5 +1,5 @@
 <!--================Header Menu Area =================-->  
-  <nav id="navPrimary" class="navbar navbar-expand-lg navbar-dark" style="border-radius:6px;background-color: #144c3d94;">
+<nav id="navPrimary" class="navbar navbar-expand-lg navbar-dark" style="background-color: #144c3d94;">
     <a class="navbar-brand" href="{base_url}">
       <img class="img-fluid" src="{base_url}assets/images/website/thumb/{logo}">
     </a>
