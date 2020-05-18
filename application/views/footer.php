@@ -23,6 +23,17 @@
   <!-- <script src="{base_url}/library/template/js/jquery.easing.min.js"></script> -->
   <!-- <script src="{base_url}/library/template/js/scrolling-nav.js"></script> -->
   <script type="text/javascript">
+    $(document).ready(function(){
+      $(window).scroll(function(){
+        var scroll = $(window).scrollTop();
+        if (scroll > 80) {
+          $("#navPrimary").css("background" , "rgba(255,255,255,0.9)").css("box-shadow", "0 1px 5px 1px rgba(0,0,0,0.3)"); 
+        }else{
+          $("#navPrimary").css("background" , "rgba(255,255,255,0.3)").css("box-shadow", "none");   
+        }
+      })
+    });
+
       (function(j){
         /* set full screen no scrolling */
         // if ( screen.availWidth > 767 ) { /* desktop view */
