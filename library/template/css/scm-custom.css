@@ -1,0 +1,15 @@
+.bg-primary-cs {
+    background-color: #144c3d94;
+}
+.text-on-dark-cs {
+    color: rgba(255,255,255,.75);
+}
+
+.card {
+    border: 1px solid rgba(0, 0, 0, 0.07) !important;
+}
+
+.nav-link-cs:hover {
+    color: rgba(255,255,255,.75);
+    background-color: #d02c28;
+}
